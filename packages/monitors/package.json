@@ -1,0 +1,44 @@
+{
+  "name": "@fudo/monitors",
+  "version": "0.40.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./definitions": "./src/definitions.ts",
+    "./state": "./src/state.ts",
+    "./runner": "./src/runner.ts",
+    "./record": "./src/record.ts",
+    "./templates": "./src/templates.ts",
+    "./secrets": "./src/secrets.ts",
+    "./context": "./src/context.ts",
+    "./credentials": "./src/credentials.ts",
+    "./traps": "./src/traps.ts",
+    "./discovery": "./src/discovery/index.ts",
+    "./discovery/probe": "./src/discovery/probe.ts",
+    "./discovery/sources": "./src/discovery/sources.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fudo/shared": "workspace:*",
+    "ldapts": "8.1.8",
+    "mongodb": "^7.6.0",
+    "mssql": "^12.7.2",
+    "mysql2": "^3.24.4",
+    "net-snmp": "^3.29.1",
+    "pg": "^8.23.0",
+    "redis": "^6.2.1",
+    "ssh2": "^1.17.0",
+    "undici": "^8.11.2",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/mssql": "^12.3.0",
+    "@types/pg": "^8.23.1",
+    "@types/ssh2": "^1.15.6",
+    "vitest": "^5.0.2"
+  },
+  "license": "AGPL-3.0-or-later"
+}

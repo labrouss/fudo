@@ -1,0 +1,23 @@
+{
+ "Username": "Utilizador",
+ "Password": "Senha",
+ "Bot Token": "Token do Bot",
+ "Chat ID": "ID do Chat",
+ "API Username": "Nome de utilizador da API",
+ "API Key": "Chave API",
+ "Token": "Token",
+ "Server URL": "URL do Servidor",
+ "Title": "Título",
+ "Priority": "Prioridade",
+ "Normal": "Normal",
+ "Application Token": "Token do Aplicativo",
+ "Host URL": "URL do Host",
+ "info": "informações",
+ "warning": "aviso",
+ "error": "erro",
+ "critical": "crítico",
+ "Webhook URL": "URL do Webhook",
+ "Subject:": "Assunto:",
+ "Post URL": "Post URL",
+ "Default": "Padrão"
+}

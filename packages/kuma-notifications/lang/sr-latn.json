@@ -1,0 +1,9 @@
+{
+ "Username": "Korisničko ime",
+ "Password": "Lozinka",
+ "Server URL": "Serverski URL",
+ "Priority": "Prioritet",
+ "Normal": "Normalno",
+ "Application Token": "Aplikacioni Token",
+ "Webhook URL": "Veb-kuka URL"
+}

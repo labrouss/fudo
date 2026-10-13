@@ -1,0 +1,4789 @@
+{
+ "source": {
+  "project": "Uptime Kuma",
+  "version": "3.0.0-beta.0",
+  "commit": "b6adc19",
+  "license": "MIT"
+ },
+ "providers": [
+  {
+   "id": "Elks",
+   "file": "46elks.js",
+   "label": "46elks",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "elksUsername",
+     "label": "Username",
+     "kind": "text",
+     "required": true,
+     "hint": "https://46elks.com/account",
+     "labelKey": "Username"
+    },
+    {
+     "key": "elksAuthToken",
+     "label": "Password",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Password"
+    },
+    {
+     "key": "elksFromNumber",
+     "label": "From",
+     "kind": "text",
+     "required": true,
+     "hint": "Either a text sender ID or a phone number in E.164 format if you want to be able to receive replies. https://46elks.se/kb/text-sender-id",
+     "labelKey": "From"
+    },
+    {
+     "key": "elksToNumber",
+     "label": "To Number",
+     "kind": "text",
+     "required": true,
+     "hint": "The phone number of the recipient in E.164 format. https://46elks.se/kb/e164",
+     "labelKey": "To Number"
+    }
+   ]
+  },
+  {
+   "id": "alerta",
+   "file": "alerta.js",
+   "label": "Alerta",
+   "category": "Incident management",
+   "fields": [
+    {
+     "key": "alertaApiEndpoint",
+     "label": "API Endpoint",
+     "kind": "text",
+     "required": true,
+     "labelKey": "alertaApiEndpoint"
+    },
+    {
+     "key": "alertaEnvironment",
+     "label": "Environment",
+     "kind": "text",
+     "required": true,
+     "labelKey": "alertaEnvironment"
+    },
+    {
+     "key": "alertaApiKey",
+     "label": "API Key",
+     "kind": "text",
+     "required": true,
+     "labelKey": "alertaApiKey"
+    },
+    {
+     "key": "alertaAlertState",
+     "label": "Alert State",
+     "kind": "text",
+     "required": true,
+     "labelKey": "alertaAlertState"
+    },
+    {
+     "key": "alertaRecoverState",
+     "label": "Recover State",
+     "kind": "text",
+     "required": true,
+     "labelKey": "alertaRecoverState"
+    }
+   ]
+  },
+  {
+   "id": "AlertNow",
+   "file": "alertnow.js",
+   "label": "AlertNow",
+   "category": "Incident management",
+   "fields": [
+    {
+     "key": "alertNowWebhookURL",
+     "label": "Webhook URL",
+     "kind": "text",
+     "required": true,
+     "hint": "* Required here"
+    }
+   ]
+  },
+  {
+   "id": "AliyunSMS",
+   "file": "aliyun-sms.js",
+   "label": "AliyunSMS (阿里云短信服务)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "accessKeyId",
+     "label": "AccessKey ID",
+     "kind": "secret",
+     "required": true
+    },
+    {
+     "key": "secretAccessKey",
+     "label": "AccessKey Secret",
+     "kind": "secret",
+     "required": true
+    },
+    {
+     "key": "phonenumber",
+     "label": "PhoneNumbers",
+     "kind": "secret",
+     "required": true
+    },
+    {
+     "key": "templateCode",
+     "label": "TemplateCode",
+     "kind": "text",
+     "required": true
+    },
+    {
+     "key": "signName",
+     "label": "SignName",
+     "kind": "text",
+     "required": true,
+     "hint": "Due to carrier restrictions, enable optional variables at the risk of non-delivery",
+     "hintKey": "aliyun_enable_optional_variables_at_the_risk_of_non_delivery"
+    },
+    {
+     "key": "optionalParameters",
+     "label": "Parameters",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "Due to carrier restrictions, enable optional variables at the risk of non-delivery",
+     "hintKey": "aliyun_enable_optional_variables_at_the_risk_of_non_delivery"
+    }
+   ]
+  },
+  {
+   "id": "amootsms",
+   "file": "amootsms.js",
+   "label": "Amoot SMS",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "amootApiToken",
+     "label": "API Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "Enter one or more mobile numbers separated by commas.",
+     "labelKey": "API Token",
+     "hintKey": "Amoot SMS recipient numbers help"
+    },
+    {
+     "key": "amootMobiles",
+     "label": "Recipient Numbers",
+     "kind": "text",
+     "required": true,
+     "hint": "Enter one or more mobile numbers separated by commas.",
+     "labelKey": "Recipient Numbers",
+     "hintKey": "Amoot SMS recipient numbers help"
+    },
+    {
+     "key": "amootUsePattern",
+     "label": "Use Pattern",
+     "kind": "checkbox",
+     "required": false,
+     "labelKey": "Use Pattern"
+    },
+    {
+     "key": "amootPatternCodeId",
+     "label": "Pattern Code ID",
+     "kind": "number",
+     "required": true,
+     "hint": "Create an Amoot SMS pattern",
+     "showIf": {
+      "key": "amootUsePattern",
+      "equals": true
+     },
+     "labelKey": "Pattern Code ID"
+    },
+    {
+     "key": "amootUseOwnLine",
+     "label": "Use Own Line for Pattern",
+     "kind": "checkbox",
+     "required": false,
+     "showIf": {
+      "key": "amootUsePattern",
+      "equals": true
+     },
+     "labelKey": "Use Own Line for Pattern"
+    },
+    {
+     "key": "amootLineNumber",
+     "label": "Line Number",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Line Number",
+     "default": "public"
+    }
+   ]
+  },
+  {
+   "id": "bale",
+   "file": "bale.js",
+   "label": "Bale",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "baleBotToken",
+     "label": "Bot Token",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Bot Token"
+    },
+    {
+     "key": "baleChatID",
+     "label": "Chat ID",
+     "kind": "text",
+     "required": true,
+     "hint": "Support Direct Chat / Group / Channel's Chat ID You can get your chat ID by sending a message to the bot and going to this URL to view the chat_id:",
+     "labelKey": "Chat ID"
+    }
+   ]
+  },
+  {
+   "id": "Bark",
+   "file": "bark.js",
+   "label": "Bark",
+   "category": "Push",
+   "fields": [
+    {
+     "key": "apiVersion",
+     "label": "Bark API Version",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "v1",
+       "label": "v1"
+      },
+      {
+       "value": "v2",
+       "label": "v2"
+      }
+     ],
+     "labelKey": "Bark API Version"
+    },
+    {
+     "key": "barkEndpoint",
+     "label": "Bark Endpoint",
+     "kind": "text",
+     "required": true
+    },
+    {
+     "key": "barkGroup",
+     "label": "Bark Group",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Bark Group"
+    },
+    {
+     "key": "barkSound",
+     "label": "Bark Sound",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "alarm",
+       "label": "alarm"
+      },
+      {
+       "value": "anticipate",
+       "label": "anticipate"
+      },
+      {
+       "value": "bell",
+       "label": "bell"
+      },
+      {
+       "value": "birdsong",
+       "label": "birdsong"
+      },
+      {
+       "value": "bloom",
+       "label": "bloom"
+      },
+      {
+       "value": "calypso",
+       "label": "calypso"
+      },
+      {
+       "value": "chime",
+       "label": "chime"
+      },
+      {
+       "value": "choo",
+       "label": "choo"
+      },
+      {
+       "value": "descent",
+       "label": "descent"
+      },
+      {
+       "value": "electronic",
+       "label": "electronic"
+      },
+      {
+       "value": "fanfare",
+       "label": "fanfare"
+      },
+      {
+       "value": "glass",
+       "label": "glass"
+      },
+      {
+       "value": "gotosleep",
+       "label": "gotosleep"
+      },
+      {
+       "value": "healthnotification",
+       "label": "healthnotification"
+      },
+      {
+       "value": "horn",
+       "label": "horn"
+      },
+      {
+       "value": "ladder",
+       "label": "ladder"
+      },
+      {
+       "value": "mailsent",
+       "label": "mailsent"
+      },
+      {
+       "value": "minuet",
+       "label": "minuet"
+      },
+      {
+       "value": "multiwayinvitation",
+       "label": "multiwayinvitation"
+      },
+      {
+       "value": "newmail",
+       "label": "newmail"
+      },
+      {
+       "value": "newsflash",
+       "label": "newsflash"
+      },
+      {
+       "value": "noir",
+       "label": "noir"
+      },
+      {
+       "value": "paymentsuccess",
+       "label": "paymentsuccess"
+      },
+      {
+       "value": "shake",
+       "label": "shake"
+      },
+      {
+       "value": "sherwoodforest",
+       "label": "sherwoodforest"
+      },
+      {
+       "value": "silence",
+       "label": "silence"
+      },
+      {
+       "value": "spell",
+       "label": "spell"
+      },
+      {
+       "value": "suspense",
+       "label": "suspense"
+      },
+      {
+       "value": "telegraph",
+       "label": "telegraph"
+      },
+      {
+       "value": "tiptoes",
+       "label": "tiptoes"
+      },
+      {
+       "value": "typewriters",
+       "label": "typewriters"
+      },
+      {
+       "value": "update",
+       "label": "update"
+      }
+     ],
+     "labelKey": "Bark Sound"
+    }
+   ]
+  },
+  {
+   "id": "bearsms",
+   "file": "bearsms.js",
+   "label": "BearSMS (Israel)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "bearsmsUsername",
+     "label": "API Username",
+     "kind": "text",
+     "required": true,
+     "labelKey": "API Username"
+    },
+    {
+     "key": "bearsmsHashKey",
+     "label": "Hash Key",
+     "kind": "secret",
+     "required": true,
+     "hint": "Optional sender ID shown to recipients (max 11 characters). It must be approved in your BearSMS account, otherwise the account's default sender is used.",
+     "labelKey": "Hash Key",
+     "hintKey": "bearsmsSenderDescription"
+    },
+    {
+     "key": "bearsmsSenderId",
+     "label": "From Name/Number",
+     "kind": "text",
+     "required": false,
+     "hint": "Optional sender ID shown to recipients (max 11 characters). It must be approved in your BearSMS account, otherwise the account's default sender is used.",
+     "labelKey": "From Name/Number",
+     "hintKey": "bearsmsSenderDescription"
+    },
+    {
+     "key": "bearsmsPhoneNumber",
+     "label": "Recipient Number",
+     "kind": "text",
+     "required": true,
+     "hint": "Recipient number with country code, without + or 00 (e.g. 9725XXXXXXXX).",
+     "labelKey": "Recipient Number",
+     "hintKey": "bearsmsPhoneNumberDescription"
+    }
+   ]
+  },
+  {
+   "id": "Bitrix24",
+   "file": "bitrix24.js",
+   "label": "Bitrix24",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "bitrix24WebhookURL",
+     "label": "Bitrix24 Webhook URL",
+     "kind": "secret",
+     "required": true,
+     "hint": "Enter your user ID in Bitrix24. You can find out the ID from the link by going to the user's profile.",
+     "labelKey": "Bitrix24 Webhook URL",
+     "hintKey": "bitrix24SupportUserID"
+    },
+    {
+     "key": "bitrix24UserID",
+     "label": "User ID",
+     "kind": "text",
+     "required": true,
+     "hint": "Enter your user ID in Bitrix24. You can find out the ID from the link by going to the user's profile.",
+     "labelKey": "User ID",
+     "hintKey": "bitrix24SupportUserID"
+    }
+   ]
+  },
+  {
+   "id": "Brevo",
+   "file": "brevo.js",
+   "label": "Brevo",
+   "category": "Email",
+   "fields": [
+    {
+     "key": "brevoApiKey",
+     "label": "Brevo API Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "brevoApiKey"
+    },
+    {
+     "key": "brevoFromEmail",
+     "label": "From Email",
+     "kind": "text",
+     "required": true,
+     "hint": "leave blank for default name",
+     "labelKey": "brevoFromEmail",
+     "hintKey": "brevoLeaveBlankForDefaultName"
+    },
+    {
+     "key": "brevoFromName",
+     "label": "From Name",
+     "kind": "text",
+     "required": false,
+     "hint": "leave blank for default name",
+     "labelKey": "brevoFromName",
+     "hintKey": "brevoLeaveBlankForDefaultName",
+     "default": "Uptime Kuma"
+    },
+    {
+     "key": "brevoToEmail",
+     "label": "To Email",
+     "kind": "text",
+     "required": true,
+     "hint": "Separate multiple email addresses with commas",
+     "labelKey": "brevoToEmail",
+     "hintKey": "brevoSeparateMultipleEmails"
+    },
+    {
+     "key": "brevoCcEmail",
+     "label": "CC Email",
+     "kind": "text",
+     "required": false,
+     "hint": "Separate multiple email addresses with commas",
+     "labelKey": "brevoCcEmail",
+     "hintKey": "brevoSeparateMultipleEmails"
+    },
+    {
+     "key": "brevoBccEmail",
+     "label": "BCC Email",
+     "kind": "text",
+     "required": false,
+     "labelKey": "brevoBccEmail"
+    },
+    {
+     "key": "brevoSubject",
+     "label": "Subject",
+     "kind": "text",
+     "required": false,
+     "labelKey": "brevoSubject",
+     "default": "Notification from Your Uptime Kuma"
+    }
+   ]
+  },
+  {
+   "id": "CallMeBot",
+   "file": "call-me-bot.js",
+   "label": "CallMeBot (WhatsApp, Telegram Call, Facebook Messenger)",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "callMeBotEndpoint",
+     "label": "Endpoint",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Endpoint"
+    }
+   ]
+  },
+  {
+   "id": "Cellsynt",
+   "file": "cellsynt.js",
+   "label": "Cellsynt",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "cellsyntLogin",
+     "label": "Username",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Username"
+    },
+    {
+     "key": "cellsyntPassword",
+     "label": "Password",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Password"
+    },
+    {
+     "key": "cellsyntOriginatortype",
+     "label": "Originator type",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "alpha",
+       "label": "Alphanumeric (recommended)",
+       "labelKey": "Alphanumeric (recommended)"
+      },
+      {
+       "value": "numeric",
+       "label": "Telephone number",
+       "labelKey": "Telephone number"
+      }
+     ],
+     "hint": "Alphanumeric (recommended): Alphanumeric string (max 11 alphanumeric characters). Recipients can not reply to the message.",
+     "labelKey": "Originator type",
+     "default": "alpha"
+    },
+    {
+     "key": "cellsyntOriginator",
+     "label": "Originator ()",
+     "kind": "text",
+     "required": true,
+     "hint": "Visible on recipient's mobile phone as originator of the message. Allowed values and function depends on parameter originatortype.",
+     "default": "uptimekuma"
+    },
+    {
+     "key": "cellsyntDestination",
+     "label": "Destination",
+     "kind": "text",
+     "required": true,
+     "hint": "Recipient's telephone number using international format with leading 00 followed by country code, e.g. 00447920110000 for the UK number 07920 110 000 (max 17 digits in total). Max 25000 comma separate",
+     "labelKey": "Destination"
+    },
+    {
+     "key": "cellsyntAllowLongSMS",
+     "label": "Allow Long SMS",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "Split long messages into up to 6 parts. 153 x 6 = 918 characters.",
+     "labelKey": "Allow Long SMS",
+     "hintKey": "cellsyntSplitLongMessages"
+    }
+   ]
+  },
+  {
+   "id": "clicksendsms",
+   "file": "clicksendsms.js",
+   "label": "ClickSend SMS",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "clicksendsmsLogin",
+     "label": "API Username",
+     "kind": "text",
+     "required": true,
+     "labelKey": "API Username"
+    },
+    {
+     "key": "clicksendsmsPassword",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "API Key"
+    },
+    {
+     "key": "clicksendsmsToNumber",
+     "label": "Recipient Number",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Recipient Number"
+    },
+    {
+     "key": "clicksendsmsSenderName",
+     "label": "From Name/Number - Read more",
+     "kind": "text",
+     "required": false,
+     "hint": "Leave blank to use a shared sender number.",
+     "hintKey": "Leave blank to use a shared sender number."
+    }
+   ]
+  },
+  {
+   "id": "ClickUp",
+   "file": "clickup.js",
+   "label": "ClickUp",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "clickupToken",
+     "label": "ClickUp API Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "You can create a personal access token in ClickUp by going to Settings -> Integrations & ClickApps -> ClickUp API -> API Token",
+     "hintKey": "ClickUp API Token Description"
+    },
+    {
+     "key": "clickupWorkspaceId",
+     "label": "ClickUp Workspace ID",
+     "kind": "text",
+     "required": true,
+     "hint": "You can find it in your workspace's URL, right after app.clickup.com/, e.g. app.clickup.com/12345678/home.",
+     "hintKey": "ClickUp Workspace ID Description"
+    },
+    {
+     "key": "clickupChannelId",
+     "label": "ClickUp Channel ID",
+     "kind": "text",
+     "required": true,
+     "hint": "You can find it in the Chat channel's URL, right after /chat/r/, e.g. .../chat/r/abc123-4567.",
+     "hintKey": "ClickUp Channel ID Description"
+    },
+    {
+     "key": "clickupDisableUrl",
+     "label": "Disable URL in Notification",
+     "kind": "checkbox",
+     "required": false,
+     "labelKey": "Disable URL in Notification"
+    }
+   ]
+  },
+  {
+   "id": "DingDing",
+   "file": "dingding.js",
+   "label": "DingDing (钉钉自定义机器人)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "webHookUrl",
+     "label": "WebHookUrl",
+     "kind": "text",
+     "required": true,
+     "hint": "For safety, must use secret key"
+    },
+    {
+     "key": "secretKey",
+     "label": "SecretKey",
+     "kind": "secret",
+     "required": true,
+     "hint": "For safety, must use secret key"
+    },
+    {
+     "key": "mentioning",
+     "label": "Mentioning",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "nobody",
+       "label": "Don"
+      },
+      {
+       "value": "everyone",
+       "label": "Mention …"
+      },
+      {
+       "value": "specify-mobiles",
+       "label": "Mention mobile list",
+       "labelKey": "Mention Mobile List"
+      },
+      {
+       "value": "specify-users",
+       "label": "Mention user id list",
+       "labelKey": "Mention User List"
+      }
+     ],
+     "default": "nobody"
+    },
+    {
+     "key": "mobileList",
+     "label": "List",
+     "kind": "text",
+     "required": false,
+     "showIf": {
+      "key": "mentioning",
+      "equals": "specify-mobiles"
+     }
+    },
+    {
+     "key": "userList",
+     "label": "List",
+     "kind": "text",
+     "required": false,
+     "showIf": {
+      "key": "mentioning",
+      "equals": "specify-users"
+     }
+    }
+   ]
+  },
+  {
+   "id": "discord",
+   "file": "discord.js",
+   "label": "Discord",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "discordWebhookUrl",
+     "label": "Discord Webhook URL",
+     "kind": "secret",
+     "required": true,
+     "hint": "You can get this by going to Server Settings -> Integrations -> View Webhooks -> New Webhook",
+     "labelKey": "Discord Webhook URL",
+     "hintKey": "wayToGetDiscordURL"
+    },
+    {
+     "key": "discordUsername",
+     "label": "Bot Display Name",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Bot Display Name"
+    },
+    {
+     "key": "discordPrefixMessage",
+     "label": "Prefix Custom Message",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Prefix Custom Message"
+    },
+    {
+     "key": "discordMessageFormat",
+     "label": "Message Format",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "normal",
+       "label": "Normal (rich embeds)",
+       "labelKey": "discordMessageFormatNormal"
+      },
+      {
+       "value": "minimalist",
+       "label": "Minimalist (short status)",
+       "labelKey": "discordMessageFormatMinimalist"
+      },
+      {
+       "value": "custom",
+       "label": "Custom template",
+       "labelKey": "discordMessageFormatCustom"
+      }
+     ],
+     "labelKey": "discordMessageFormat"
+    },
+    {
+     "key": "discordMessageTemplate",
+     "label": "Message Template",
+     "kind": "text",
+     "required": false,
+     "hint": "If enabled, the message will be sent using a custom template (LiquidJS). Leave blank to use the default Uptime Kuma format.",
+     "showIf": {
+      "key": "discordMessageFormat",
+      "equals": "custom"
+     },
+     "labelKey": "discordMessageTemplate",
+     "hintKey": "discordUseMessageTemplateDescription"
+    },
+    {
+     "key": "discordChannelType",
+     "label": "Select message type",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "channel",
+       "label": "Send to channel",
+       "labelKey": "Send to channel"
+      },
+      {
+       "value": "createNewForumPost",
+       "label": "Create new forum post",
+       "labelKey": "Create new forum post"
+      },
+      {
+       "value": "postToThread",
+       "label": "Post to existing thread / forum post",
+       "labelKey": "postToExistingThread"
+      }
+     ],
+     "labelKey": "Select message type",
+     "default": "channel"
+    },
+    {
+     "key": "postName",
+     "label": "Thread / Forum post ID",
+     "kind": "text",
+     "required": false,
+     "hint": "{{ $t(\"whatHappensAtForumPost\", { option: $t(\"postToExistingThread\") }) }}",
+     "showIf": {
+      "key": "discordChannelType",
+      "equals": "createNewForumPost"
+     },
+     "labelKey": "threadForumPostID"
+    },
+    {
+     "key": "threadId",
+     "label": "Thread / Forum post ID",
+     "kind": "text",
+     "required": false,
+     "hint": "here",
+     "showIf": {
+      "key": "discordChannelType",
+      "equals": "postToThread"
+     },
+     "labelKey": "threadForumPostID"
+    },
+    {
+     "key": "disableUrl",
+     "label": "Disable URL in Notification",
+     "kind": "checkbox",
+     "required": false,
+     "labelKey": "Disable URL in Notification",
+     "default": false
+    },
+    {
+     "key": "discordSuppressNotifications",
+     "label": "Suppress Notifications",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "When enabled, messages will be posted to the channel but won't trigger push or desktop notifications for recipients.",
+     "labelKey": "Suppress Notifications",
+     "hintKey": "discordSuppressNotificationsHelptext",
+     "default": false
+    }
+   ]
+  },
+  {
+   "id": "egosms",
+   "file": "egosms.js",
+   "label": "EgoSMS (Uganda)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "egosmsUsername",
+     "label": "API Username",
+     "kind": "text",
+     "required": true,
+     "labelKey": "API Username"
+    },
+    {
+     "key": "egosmsPassword",
+     "label": "Password",
+     "kind": "secret",
+     "required": true,
+     "hint": "Sender ID shown to recipients (max 11 characters). Defaults to EGOSMS if empty.",
+     "labelKey": "Password",
+     "hintKey": "egosmsSenderDescription"
+    },
+    {
+     "key": "egosmsSender",
+     "label": "From Name/Number",
+     "kind": "text",
+     "required": false,
+     "hint": "Sender ID shown to recipients (max 11 characters). Defaults to EGOSMS if empty.",
+     "labelKey": "From Name/Number",
+     "hintKey": "egosmsSenderDescription"
+    },
+    {
+     "key": "egosmsPhoneNumber",
+     "label": "Recipient Number",
+     "kind": "text",
+     "required": true,
+     "hint": "Recipient number with country code, without + or 00 (e.g. 2567XXXXXXXX).",
+     "labelKey": "Recipient Number",
+     "hintKey": "egosmsPhoneNumberDescription"
+    }
+   ]
+  },
+  {
+   "id": "Feishu",
+   "file": "feishu.js",
+   "label": "Feishu (飞书)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "feishuWebHookUrl",
+     "label": "Feishu WebHookURL",
+     "kind": "text",
+     "required": true,
+     "hint": "* Required"
+    }
+   ]
+  },
+  {
+   "id": "FlashDuty",
+   "file": "flashduty.js",
+   "label": "FlashDuty (快猫星云)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "flashdutyIntegrationKey",
+     "label": "Push URL",
+     "kind": "secret",
+     "required": false,
+     "hint": "* Required"
+    },
+    {
+     "key": "flashdutySeverity",
+     "label": "Severity",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "Info",
+       "label": "Info"
+      },
+      {
+       "value": "Warning",
+       "label": "Warning"
+      },
+      {
+       "value": "Critical",
+       "label": "Critical"
+      }
+     ],
+     "labelKey": "FlashDuty Severity"
+    }
+   ]
+  },
+  {
+   "id": "Flowtriq",
+   "file": "flowtriq.js",
+   "label": "Flowtriq",
+   "category": "Incident management",
+   "fields": [
+    {
+     "key": "flowtriqWebhookUrl",
+     "label": "Webhook URL",
+     "kind": "text",
+     "required": true,
+     "hint": "Optional API key for authenticating webhook requests to your Flowtriq instance.",
+     "hintKey": "flowtriqApiKeyDescription"
+    },
+    {
+     "key": "flowtriqApiKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": false,
+     "hint": "Optional API key for authenticating webhook requests to your Flowtriq instance.",
+     "labelKey": "Flowtriq API Key",
+     "hintKey": "flowtriqApiKeyDescription"
+    }
+   ]
+  },
+  {
+   "id": "fluxer",
+   "file": "fluxer.js",
+   "label": "Fluxer",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "fluxerWebhookUrl",
+     "label": "Fluxer Webhook URL",
+     "kind": "secret",
+     "required": true,
+     "hint": "You can get this by going to the target channel's settings > Webhooks > Create Webhook > Copy Webhook URL.",
+     "labelKey": "Fluxer Webhook URL",
+     "hintKey": "wayToGetFluxerURL"
+    },
+    {
+     "key": "fluxerUsername",
+     "label": "Bot Display Name",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Bot Display Name"
+    },
+    {
+     "key": "fluxerPrefixMessage",
+     "label": "Prefix Custom Message",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Prefix Custom Message"
+    },
+    {
+     "key": "fluxerMessageFormat",
+     "label": "Message Format",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "normal",
+       "label": "Normal (rich embeds)",
+       "labelKey": "fluxerMessageFormatNormal"
+      },
+      {
+       "value": "minimalist",
+       "label": "Minimalist (short status)",
+       "labelKey": "fluxerMessageFormatMinimalist"
+      },
+      {
+       "value": "custom",
+       "label": "Custom template",
+       "labelKey": "fluxerMessageFormatCustom"
+      }
+     ],
+     "labelKey": "fluxerMessageFormat"
+    },
+    {
+     "key": "fluxerMessageTemplate",
+     "label": "Message Template",
+     "kind": "text",
+     "required": false,
+     "hint": "If enabled, the message will be sent using a custom template (LiquidJS). Leave blank to use the default Uptime Kuma format.",
+     "showIf": {
+      "key": "fluxerMessageFormat",
+      "equals": "custom"
+     },
+     "labelKey": "fluxerMessageTemplate",
+     "hintKey": "fluxerUseMessageTemplateDescription"
+    }
+   ]
+  },
+  {
+   "id": "FreeMobile",
+   "file": "freemobile.js",
+   "label": "FreeMobile (mobile.free.fr)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "freemobileUser",
+     "label": "Free Mobile User Identifier",
+     "kind": "text",
+     "required": true
+    },
+    {
+     "key": "freemobilePass",
+     "label": "Free Mobile API Key",
+     "kind": "text",
+     "required": true
+    }
+   ]
+  },
+  {
+   "id": "GoAlert",
+   "file": "goalert.js",
+   "label": "GoAlert",
+   "category": "Incident management",
+   "fields": [
+    {
+     "key": "goAlertBaseURL",
+     "label": "Base URL",
+     "kind": "text",
+     "required": true,
+     "hint": "Get generic API integration key for the service in this format \"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\" usually the value of token parameter of copied URL.",
+     "labelKey": "Base URL",
+     "hintKey": "goAlertIntegrationKeyInfo"
+    },
+    {
+     "key": "goAlertToken",
+     "label": "Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "Get generic API integration key for the service in this format \"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\" usually the value of token parameter of copied URL.",
+     "labelKey": "Token",
+     "hintKey": "goAlertIntegrationKeyInfo"
+    }
+   ]
+  },
+  {
+   "id": "GoogleChat",
+   "file": "google-chat.js",
+   "label": "Google Chat (Google Workspace)",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "googleChatWebhookURL",
+     "label": "Webhook URL",
+     "kind": "text",
+     "required": true,
+     "hint": "* Required https://developers.google.com/chat/how-tos/webhooks"
+    },
+    {
+     "key": "googleChatMaxRetries",
+     "label": "Maximum Retries",
+     "kind": "number",
+     "required": true,
+     "hint": "Number of retry attempts (every 60-180 seconds) if the webhook fails.",
+     "hintKey": "Number of retry attempts if webhook fails",
+     "default": 1
+    },
+    {
+     "key": "googleChatUseTemplate",
+     "label": "Template plain text instead of using cards",
+     "kind": "checkbox",
+     "required": false,
+     "labelKey": "Template plain text instead of using cards"
+    },
+    {
+     "key": "googleChatTemplate",
+     "label": "Chat Template",
+     "kind": "text",
+     "required": true,
+     "showIf": {
+      "key": "googleChatUseTemplate",
+      "equals": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "GoogleSheets",
+   "file": "google-sheets.js",
+   "label": "Google Sheets",
+   "category": "Other",
+   "fields": [
+    {
+     "key": "googleSheetsWebhookUrl",
+     "label": "Google Apps Script Webhook URL",
+     "kind": "secret",
+     "required": true,
+     "hint": "Deploy a Google Apps Script as a web app and paste the URL here",
+     "labelKey": "Google Apps Script Webhook URL"
+    }
+   ]
+  },
+  {
+   "id": "gorush",
+   "file": "gorush.js",
+   "label": "Gorush",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "gorushDeviceToken",
+     "label": "Device Token",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Device Token"
+    },
+    {
+     "key": "gorushServerURL",
+     "label": "Server URL",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Server URL"
+    },
+    {
+     "key": "gorushPlatform",
+     "label": "Platform",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "ios",
+       "label": "iOS"
+      },
+      {
+       "value": "android",
+       "label": "Android"
+      },
+      {
+       "value": "huawei",
+       "label": "Huawei",
+       "labelKey": "Huawei"
+      }
+     ],
+     "labelKey": "Platform"
+    },
+    {
+     "key": "gorushTitle",
+     "label": "Title",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Title"
+    },
+    {
+     "key": "gorushPriority",
+     "label": "Priority",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "normal",
+       "label": "Normal",
+       "labelKey": "Normal"
+      },
+      {
+       "value": "high",
+       "label": "High",
+       "labelKey": "High"
+      }
+     ],
+     "labelKey": "Priority"
+    },
+    {
+     "key": "gorushRetry",
+     "label": "Retry",
+     "kind": "number",
+     "required": false,
+     "hint": "* Required",
+     "labelKey": "Retry"
+    },
+    {
+     "key": "gorushTopic",
+     "label": "Topic",
+     "kind": "text",
+     "required": false,
+     "hint": "* Required",
+     "labelKey": "Topic"
+    }
+   ]
+  },
+  {
+   "id": "gotify",
+   "file": "gotify.js",
+   "label": "Gotify",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "gotifyapplicationToken",
+     "label": "Application Token",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Application Token"
+    },
+    {
+     "key": "gotifyserverurl",
+     "label": "Server URL",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Server URL"
+    },
+    {
+     "key": "gotifyPriority",
+     "label": "Priority",
+     "kind": "number",
+     "required": true,
+     "labelKey": "Priority",
+     "default": 8
+    }
+   ]
+  },
+  {
+   "id": "GrafanaOncall",
+   "file": "grafana-oncall.js",
+   "label": "Grafana Oncall",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "GrafanaOncallURL",
+     "label": "Grafana Oncall URL",
+     "kind": "text",
+     "required": true
+    }
+   ]
+  },
+  {
+   "id": "gtxmessaging",
+   "file": "gtx-messaging.js",
+   "label": "GtxMessaging",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "gtxMessagingApiKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true,
+     "hint": "You can find your API key at: My Routing Accounts > Show Account Information > API Credentials > REST API (v2.x)",
+     "labelKey": "API Key",
+     "hintKey": "gtxMessagingApiKeyHint"
+    },
+    {
+     "key": "gtxMessagingFrom",
+     "label": "From Phone Number / Transmission Path Originating Address (TPOA)",
+     "kind": "text",
+     "required": true,
+     "labelKey": "From Phone Number / Transmission Path Originating Address (TPOA)"
+    },
+    {
+     "key": "gtxMessagingTo",
+     "label": "To Phone Number",
+     "kind": "text",
+     "required": true,
+     "labelKey": "To Phone Number"
+    }
+   ]
+  },
+  {
+   "id": "HaloPSA",
+   "file": "HaloPSA.js",
+   "label": "Halo PSA",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "halowebhookurl",
+     "label": "Halowebhookurl",
+     "kind": "secret",
+     "required": true,
+     "hint": "Enter the webhook URL from your Halo PSA Integration Runbook (Configuration > Integrations > Custom Integrations > Integration Runbooks). Select 'Can only be started from Halo and from a public endpoi",
+     "hintKey": "halopsa_webhook_url_desc"
+    },
+    {
+     "key": "haloUsername",
+     "label": "Username",
+     "kind": "text",
+     "required": false,
+     "hint": "Username for authenticating with Halo PSA webhook",
+     "labelKey": "Username",
+     "hintKey": "halopsa_username_desc"
+    },
+    {
+     "key": "haloPassword",
+     "label": "Password",
+     "kind": "text",
+     "required": false,
+     "hint": "Password for authenticating with Halo PSA webhook",
+     "labelKey": "Password",
+     "hintKey": "halopsa_password_desc"
+    }
+   ]
+  },
+  {
+   "id": "HeiiOnCall",
+   "file": "heii-oncall.js",
+   "label": "Heii On-Call",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "heiiOnCallApiKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true
+    },
+    {
+     "key": "heiiOnCallTriggerId",
+     "label": "Trigger ID",
+     "kind": "secret",
+     "required": true
+    }
+   ]
+  },
+  {
+   "id": "HomeAssistant",
+   "file": "home-assistant.js",
+   "label": "Home Assistant",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "homeAssistantUrl",
+     "label": "Home Assistant URL",
+     "kind": "text",
+     "required": true
+    },
+    {
+     "key": "longLivedAccessToken",
+     "label": "Long-Lived Access Token",
+     "kind": "text",
+     "required": true,
+     "hint": "Long-Lived Access Token can be created by clicking on your profile name (bottom left) and scrolling to the bottom then click Create Token."
+    },
+    {
+     "key": "notificationService",
+     "label": "Notification Action",
+     "kind": "text",
+     "required": false,
+     "hint": "A list of Notification Actions can be found in Home Assistant under \"Settings > Developer Tools > Actions\". Search for \"notify\" to find your actions. Enter only the part after \"notify.\", e.g. for the ",
+     "labelKey": "Notification Action"
+    }
+   ]
+  },
+  {
+   "id": "Indigo",
+   "file": "indigo.js",
+   "label": "Indigo",
+   "category": "Home automation",
+   "fields": [
+    {
+     "key": "indigoUrl",
+     "label": "Indigo URL",
+     "kind": "text",
+     "required": true,
+     "hint": "Your Indigo Reflector address (https://NAME.indigodomo.net) or the Indigo Web Server on your network (https://IP:8176).",
+     "hintKey": "indigoUrlHelptext"
+    },
+    {
+     "key": "indigoIgnoreTlsError",
+     "label": "Ignore TLS Error",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "Needed for the Indigo Web Server on your network, which uses a self-signed certificate. Not needed for the Reflector.",
+     "labelKey": "Ignore TLS Error",
+     "hintKey": "indigoIgnoreTlsErrorHelptext"
+    },
+    {
+     "key": "indigoApiKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true,
+     "hint": "An API key from your Indigo Account (Authorizations), or a local secret for the Web Server on your network.",
+     "hintKey": "indigoApiKeyHelptext"
+    },
+    {
+     "key": "indigoVariableId",
+     "label": "Variable ID",
+     "kind": "number",
+     "required": false,
+     "hint": "The alert message is written to this variable.",
+     "labelKey": "Variable ID",
+     "hintKey": "indigoVariableIdHelptext"
+    },
+    {
+     "key": "indigoActionGroupId",
+     "label": "Action Group ID",
+     "kind": "number",
+     "required": false,
+     "hint": "Executed after the variable is updated. Set a variable, an action group, or both. Copy IDs from Indigo with right-click → Copy ID.",
+     "labelKey": "Action Group ID",
+     "hintKey": "indigoActionGroupIdHelptext"
+    }
+   ]
+  },
+  {
+   "id": "JiraServiceManagement",
+   "file": "jira-service-management.js",
+   "label": "Jira Service Management",
+   "category": "Incident management",
+   "fields": [
+    {
+     "key": "jsmCloudId",
+     "label": "Cloud ID",
+     "kind": "text",
+     "required": true
+    },
+    {
+     "key": "jsmEmail",
+     "label": "Email",
+     "kind": "text",
+     "required": true
+    },
+    {
+     "key": "jsmApiToken",
+     "label": "API Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "* Required"
+    },
+    {
+     "key": "jsmPriority",
+     "label": "Priority",
+     "kind": "number",
+     "required": false,
+     "hint": "* Required",
+     "labelKey": "Priority"
+    }
+   ]
+  },
+  {
+   "id": "Keep",
+   "file": "keep.js",
+   "label": "Keep",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "webhookURL",
+     "label": "Host URL",
+     "kind": "text",
+     "required": true,
+     "hint": "https://docs.keephq.dev/providers/documentation/uptimekuma-provider",
+     "labelKey": "Host URL",
+     "default": ""
+    },
+    {
+     "key": "webhookAPIKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "API Key"
+    }
+   ]
+  },
+  {
+   "id": "Kook",
+   "file": "kook.js",
+   "label": "Kook",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "kookBotToken",
+     "label": "Bot Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "Switch on 'Developer Mode' in Kook setting, and right click the guild to get its ID",
+     "labelKey": "Bot Token"
+    },
+    {
+     "key": "kookGuildID",
+     "label": "Guild ID",
+     "kind": "text",
+     "required": true,
+     "hint": "Switch on 'Developer Mode' in Kook setting, and right click the guild to get its ID",
+     "labelKey": "Guild ID"
+    }
+   ]
+  },
+  {
+   "id": "line",
+   "file": "line.js",
+   "label": "LINE Messenger",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "lineChannelAccessToken",
+     "label": "Channel access token (Long-lived)",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Channel access token (Long-lived)"
+    },
+    {
+     "key": "lineUserID",
+     "label": "Your user ID",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Your User ID"
+    }
+   ]
+  },
+  {
+   "id": "lunasea",
+   "file": "lunasea.js",
+   "label": "LunaSea",
+   "category": "Push",
+   "fields": [
+    {
+     "key": "lunaseaTarget",
+     "label": "Target",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "device",
+       "label": "Device ID",
+       "labelKey": "lunaseaDeviceID"
+      },
+      {
+       "value": "user",
+       "label": "User ID",
+       "labelKey": "lunaseaUserID"
+      }
+     ],
+     "default": "device"
+    },
+    {
+     "key": "lunaseaDevice",
+     "label": "User ID",
+     "kind": "text",
+     "required": false,
+     "showIf": {
+      "key": "lunaseaTarget",
+      "equals": "device"
+     }
+    },
+    {
+     "key": "lunaseaUserID",
+     "label": "User ID",
+     "kind": "text",
+     "required": false,
+     "showIf": {
+      "key": "lunaseaTarget",
+      "equals": "user"
+     }
+    }
+   ]
+  },
+  {
+   "id": "matrix",
+   "file": "matrix.js",
+   "label": "Matrix",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "homeserverUrl",
+     "label": "Homeserver URL (with http(s):// and optionally port)",
+     "kind": "text",
+     "required": true,
+     "labelKey": "matrixHomeserverURL"
+    },
+    {
+     "key": "internalRoomId",
+     "label": "Internal Room ID",
+     "kind": "text",
+     "required": true,
+     "hint": "* Required You can find the internal room ID by looking in the advanced section of the room settings in your Matrix client. It should look like !QMdRCpUIfLwsfjxye6:home.server.",
+     "labelKey": "Internal Room Id"
+    },
+    {
+     "key": "accessToken",
+     "label": "Access Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "* Required You can find the internal room ID by looking in the advanced section of the room settings in your Matrix client. It should look like !QMdRCpUIfLwsfjxye6:home.server.",
+     "labelKey": "Access Token"
+    },
+    {
+     "key": "matrixUseTemplate",
+     "label": "Use custom message template",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "If enabled, the message will be sent using a custom template.",
+     "labelKey": "matrixUseTemplate",
+     "hintKey": "matrixUseTemplateDescription"
+    },
+    {
+     "key": "matrixTemplate",
+     "label": "Message Template",
+     "kind": "text",
+     "required": true,
+     "showIf": {
+      "key": "matrixUseTemplate",
+      "equals": true
+     },
+     "labelKey": "Message Template"
+    }
+   ]
+  },
+  {
+   "id": "mattermost",
+   "file": "mattermost.js",
+   "label": "Mattermost",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "mattermostWebhookUrl",
+     "label": "Webhook URL",
+     "kind": "text",
+     "required": true
+    },
+    {
+     "key": "mattermostusername",
+     "label": "Username",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Username"
+    },
+    {
+     "key": "mattermosticonurl",
+     "label": "Icon URL",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Icon URL"
+    },
+    {
+     "key": "mattermosticonemo",
+     "label": "Icon Emoji",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Icon Emoji"
+    },
+    {
+     "key": "mattermostchannel",
+     "label": "Mattermostchannel",
+     "kind": "text",
+     "required": false,
+     "hint": "* Required https://developers.mattermost.com/integrate/webhooks/incoming/ You can override the default channel that the Webhook posts to by entering the channel name into \"Channel Name\" field. This ne"
+    }
+   ]
+  },
+  {
+   "id": "max",
+   "file": "max.js",
+   "label": "MAX messenger",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "maxBotToken",
+     "label": "Bot Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "Base API URL for MAX messenger. Default: https://platform-api.max.ru",
+     "labelKey": "Bot Token",
+     "hintKey": "maxApiUrlDescription"
+    },
+    {
+     "key": "maxApiUrl",
+     "label": "API URL",
+     "kind": "text",
+     "required": true,
+     "hint": "Base API URL for MAX messenger. Default: https://platform-api.max.ru",
+     "labelKey": "API URL",
+     "hintKey": "maxApiUrlDescription",
+     "default": "https://platform-api.max.ru"
+    },
+    {
+     "key": "maxChatID",
+     "label": "Chat ID",
+     "kind": "text",
+     "required": true,
+     "hint": "Specify the chat identifier in MAX where messages should be delivered.",
+     "labelKey": "Chat ID",
+     "hintKey": "wayToGetMaxChatID"
+    },
+    {
+     "key": "maxUseTemplate",
+     "label": "Use custom message template",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "If enabled, the message will be sent using a custom template.",
+     "labelKey": "maxUseTemplate",
+     "hintKey": "maxUseTemplateDescription"
+    },
+    {
+     "key": "maxTemplateFormat",
+     "label": "Message Format",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "plain",
+       "label": "Plain Text",
+       "labelKey": "Plain Text"
+      },
+      {
+       "value": "markdown",
+       "label": "Markdown"
+      },
+      {
+       "value": "html",
+       "label": "HTML"
+      }
+     ],
+     "hint": "MAX messenger supports plain text, Markdown and HTML formatting.",
+     "showIf": {
+      "key": "maxUseTemplate",
+      "equals": true
+     },
+     "labelKey": "Message Format",
+     "hintKey": "maxTemplateFormatDescription",
+     "default": "plain"
+    },
+    {
+     "key": "maxTemplate",
+     "label": "Message Template",
+     "kind": "text",
+     "required": true,
+     "showIf": {
+      "key": "maxUseTemplate",
+      "equals": true
+     },
+     "labelKey": "Message Template"
+    }
+   ]
+  },
+  {
+   "id": "Milky",
+   "file": "milky.js",
+   "label": "Milky(QQ)",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "httpAddr",
+     "label": "Addr",
+     "kind": "text",
+     "required": true,
+     "hint": "For safety, must set access token"
+    },
+    {
+     "key": "accessToken",
+     "label": "Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "For safety, must set access token"
+    },
+    {
+     "key": "msgType",
+     "label": "Milky Message Type",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "group",
+       "label": "Group",
+       "labelKey": "milkyGroupMessage"
+      },
+      {
+       "value": "private",
+       "label": "Private",
+       "labelKey": "milkyPrivateMessage"
+      }
+     ],
+     "labelKey": "milkyMessageType"
+    },
+    {
+     "key": "recieverId",
+     "label": "Id",
+     "kind": "text",
+     "required": true,
+     "hint": "https://milky.ntqqrev.org/"
+    }
+   ]
+  },
+  {
+   "id": "nextcloudtalk",
+   "file": "nextcloudtalk.js",
+   "label": "Nextcloud Talk",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "host",
+     "label": "Nextcloud host",
+     "kind": "text",
+     "required": false
+    },
+    {
+     "key": "conversationToken",
+     "label": "Conversation token",
+     "kind": "text",
+     "required": false
+    },
+    {
+     "key": "botSecret",
+     "label": "Bot secret",
+     "kind": "secret",
+     "required": true
+    },
+    {
+     "key": "sendSilentUp",
+     "label": "Send UP silently",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "Installing a Nextcloud Talk bot requires administrative access to the server.",
+     "labelKey": "Send UP silently"
+    },
+    {
+     "key": "sendSilentDown",
+     "label": "Send DOWN silently",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "Installing a Nextcloud Talk bot requires administrative access to the server.",
+     "labelKey": "Send DOWN silently"
+    }
+   ]
+  },
+  {
+   "id": "notifery",
+   "file": "notifery.js",
+   "label": "Notifery",
+   "category": "Push",
+   "fields": [
+    {
+     "key": "notiferyApiKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "API Key"
+    },
+    {
+     "key": "notiferyTitle",
+     "label": "Title",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Title"
+    },
+    {
+     "key": "notiferyGroup",
+     "label": "Group",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Group"
+    }
+   ]
+  },
+  {
+   "id": "notifyapp",
+   "file": "notifyapp.js",
+   "label": "Notify!",
+   "category": "Push",
+   "fields": [
+    {
+     "key": "notifyAppDeviceId",
+     "label": "Device ID or Group ID",
+     "kind": "text",
+     "required": true,
+     "hint": "The Device ID from the Notify! app, or a Group ID to alert every device in a group at once.",
+     "labelKey": "Device ID or Group ID",
+     "hintKey": "notifyAppDeviceIdDescription"
+    },
+    {
+     "key": "notifyAppToken",
+     "label": "Token",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Token"
+    },
+    {
+     "key": "notifyAppIconUrl",
+     "label": "Icon URL",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Icon URL"
+    }
+   ]
+  },
+  {
+   "id": "ntfy",
+   "file": "ntfy.js",
+   "label": "Ntfy",
+   "category": "Push",
+   "fields": [
+    {
+     "key": "ntfytopic",
+     "label": "ntfy Topic",
+     "kind": "text",
+     "required": true,
+     "hint": "Server URL should not contain the nfty topic",
+     "labelKey": "ntfy Topic",
+     "hintKey": "Server URL should not contain the nfty topic"
+    },
+    {
+     "key": "ntfyserverurl",
+     "label": "Server URL",
+     "kind": "text",
+     "required": true,
+     "hint": "Server URL should not contain the nfty topic",
+     "labelKey": "Server URL",
+     "hintKey": "Server URL should not contain the nfty topic",
+     "default": "https://ntfy.sh"
+    },
+    {
+     "key": "ntfyPriority",
+     "label": "Priority",
+     "kind": "number",
+     "required": true,
+     "hint": "= 5 \" > All events are sent with the maximum priority",
+     "labelKey": "Priority",
+     "default": 5
+    },
+    {
+     "key": "ntfyPriorityDown",
+     "label": "Priority for DOWN-events",
+     "kind": "number",
+     "required": true,
+     "hint": "= 5 \" > All events are sent with the maximum priority",
+     "labelKey": "ntfyPriorityDown",
+     "default": 5
+    },
+    {
+     "key": "ntfyAuthenticationMethod",
+     "label": "Authentication Method",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "type",
+       "label": "type"
+      }
+     ],
+     "labelKey": "ntfyAuthenticationMethod",
+     "default": "none"
+    },
+    {
+     "key": "ntfyusername",
+     "label": "Username",
+     "kind": "text",
+     "required": false,
+     "showIf": {
+      "key": "ntfyAuthenticationMethod",
+      "equals": "usernamePassword"
+     },
+     "labelKey": "Username"
+    },
+    {
+     "key": "ntfypassword",
+     "label": "Password",
+     "kind": "secret",
+     "required": false,
+     "showIf": {
+      "key": "ntfyAuthenticationMethod",
+      "equals": "usernamePassword"
+     },
+     "labelKey": "Password"
+    },
+    {
+     "key": "ntfyaccesstoken",
+     "label": "Access Token",
+     "kind": "secret",
+     "required": false,
+     "hint": "Make a phone call when alert fires. Set to 'yes' to use your first verified number, or enter a specific phone number (e.g. +12223334444). Requires ntfy Pro and a verified phone number.",
+     "showIf": {
+      "key": "ntfyAuthenticationMethod",
+      "equals": "accessToken"
+     },
+     "labelKey": "Access Token",
+     "hintKey": "ntfyCallHelptext"
+    },
+    {
+     "key": "ntfyIcon",
+     "label": "Icon URL",
+     "kind": "text",
+     "required": false,
+     "hint": "Make a phone call when alert fires. Set to 'yes' to use your first verified number, or enter a specific phone number (e.g. +12223334444). Requires ntfy Pro and a verified phone number.",
+     "labelKey": "IconUrl",
+     "hintKey": "ntfyCallHelptext"
+    },
+    {
+     "key": "ntfyCall",
+     "label": "Phone Call",
+     "kind": "text",
+     "required": false,
+     "hint": "Make a phone call when alert fires. Set to 'yes' to use your first verified number, or enter a specific phone number (e.g. +12223334444). Requires ntfy Pro and a verified phone number.",
+     "labelKey": "ntfyCall",
+     "hintKey": "ntfyCallHelptext"
+    },
+    {
+     "key": "ntfyUseTemplate",
+     "label": "Customize notification templates",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "Enable this to customize notification titles and messages using LiquidJS templating",
+     "labelKey": "ntfyUseTemplate",
+     "hintKey": "ntfyUseTemplateDescription"
+    },
+    {
+     "key": "ntfyCustomTitle",
+     "label": "Custom Title Template",
+     "kind": "text",
+     "required": false,
+     "hint": "Leave blank to use the default Uptime Kuma format",
+     "showIf": {
+      "key": "ntfyUseTemplate",
+      "equals": true
+     },
+     "labelKey": "ntfyCustomTitle",
+     "hintKey": "ntfyNotificationTemplateFallback"
+    },
+    {
+     "key": "ntfyCustomMessage",
+     "label": "Custom Message Template",
+     "kind": "text",
+     "required": false,
+     "hint": "Leave blank to use the default Uptime Kuma format",
+     "showIf": {
+      "key": "ntfyUseTemplate",
+      "equals": true
+     },
+     "labelKey": "ntfyCustomMessage",
+     "hintKey": "ntfyNotificationTemplateFallback"
+    }
+   ]
+  },
+  {
+   "id": "octopush",
+   "file": "octopush.js",
+   "label": "Octopush",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "octopushVersion",
+     "label": "Octopush API Version",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "2",
+       "label": "octopush (endpoint: …)"
+      },
+      {
+       "value": "1",
+       "label": "Legacy Octopush-DM (endpoint: …)"
+      }
+     ],
+     "hint": "Do you use the legacy version of Octopush (2011-2020) or the new version?",
+     "labelKey": "Octopush API Version",
+     "hintKey": "octopushLegacyHint"
+    },
+    {
+     "key": "octopushAPIKey",
+     "label": "\"API key\" from HTTP API credentials in control panel",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "octopushAPIKey"
+    },
+    {
+     "key": "octopushLogin",
+     "label": "\"Login\" from HTTP API credentials in control panel",
+     "kind": "text",
+     "required": true,
+     "labelKey": "octopushLogin"
+    },
+    {
+     "key": "octopushSMSType",
+     "label": "SMS Type",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "sms_premium",
+       "label": "Premium (Fast - recommended for alerting)",
+       "labelKey": "octopushTypePremium"
+      },
+      {
+       "value": "sms_low_cost",
+       "label": "Low Cost (Slow - sometimes blocked by operator)",
+       "labelKey": "octopushTypeLowCost"
+      }
+     ],
+     "labelKey": "SMS Type"
+    },
+    {
+     "key": "octopushPhoneNumber",
+     "label": "Phone number (intl format, eg : +33612345678)",
+     "kind": "text",
+     "required": true,
+     "labelKey": "octopushPhoneNumber"
+    },
+    {
+     "key": "octopushSenderName",
+     "label": "SMS Sender Name : 3-11 alphanumeric characters and space (a-zA-Z0-9)",
+     "kind": "text",
+     "required": false,
+     "labelKey": "octopushSMSSender"
+    }
+   ]
+  },
+  {
+   "id": "OneBot",
+   "file": "onebot.js",
+   "label": "OneBot",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "httpAddr",
+     "label": "Addr",
+     "kind": "text",
+     "required": true,
+     "hint": "For safety, must set access token"
+    },
+    {
+     "key": "accessToken",
+     "label": "Token",
+     "kind": "text",
+     "required": true,
+     "hint": "For safety, must set access token"
+    },
+    {
+     "key": "msgType",
+     "label": "OneBot Message Type",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "group",
+       "label": "Group",
+       "labelKey": "onebotGroupMessage"
+      },
+      {
+       "value": "private",
+       "label": "Private",
+       "labelKey": "onebotPrivateMessage"
+      }
+     ],
+     "labelKey": "onebotMessageType"
+    },
+    {
+     "key": "recieverId",
+     "label": "Id",
+     "kind": "text",
+     "required": true,
+     "hint": "https://github.com/botuniverse/onebot-11"
+    }
+   ]
+  },
+  {
+   "id": "OneChat",
+   "file": "onechat.js",
+   "label": "OneChat",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "accessToken",
+     "label": "OneChat Access Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "OneChat Access Token"
+    },
+    {
+     "key": "recieverId",
+     "label": "OneChat User ID or Group ID",
+     "kind": "text",
+     "required": true,
+     "hint": "https://chat-develop.one.th/docs"
+    },
+    {
+     "key": "botId",
+     "label": "OneChat Bot ID",
+     "kind": "text",
+     "required": true,
+     "hint": "https://chat-develop.one.th/docs"
+    }
+   ]
+  },
+  {
+   "id": "Onesender",
+   "file": "onesender.js",
+   "label": "Onesender",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "onesenderURL",
+     "label": "Host Onesender",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Host Onesender"
+    },
+    {
+     "key": "onesenderToken",
+     "label": "Token Onesender",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Token Onesender"
+    },
+    {
+     "key": "onesenderTypeReceiver",
+     "label": "Recipient Type",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "private",
+       "label": "Private Number",
+       "labelKey": "Private Number"
+      },
+      {
+       "value": "group",
+       "label": "Group ID",
+       "labelKey": "Group ID"
+      }
+     ],
+     "hint": "Make sure the number phone is valid. To send message into private number phone, ex: 628123456789",
+     "labelKey": "Recipient Type"
+    },
+    {
+     "key": "onesenderReceiver",
+     "label": "Receiver",
+     "kind": "text",
+     "required": true
+    }
+   ]
+  },
+  {
+   "id": "Ooredoo",
+   "file": "ooredoo.js",
+   "label": "Ooredoo (Maldives)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "ooredooUsername",
+     "label": "Username",
+     "kind": "text",
+     "required": true,
+     "hint": "The email address you use to sign in to the Ooredoo bulk SMS dashboard.",
+     "labelKey": "Username",
+     "hintKey": "ooredooUsernameDescription"
+    },
+    {
+     "key": "ooredooAccessKey",
+     "label": "Access Key",
+     "kind": "secret",
+     "required": true,
+     "hint": "Found under \"API Access Key\" on your Ooredoo SMS dashboard. Paste it exactly as shown — it is base64-encoded automatically before sending.",
+     "labelKey": "Access Key",
+     "hintKey": "ooredooAccessKeyDescription"
+    },
+    {
+     "key": "ooredooBearerToken",
+     "label": "Bearer Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "The token shown after \"Authorization: Bearer\" in the sample cURL command on your Ooredoo SMS dashboard.",
+     "labelKey": "Bearer Token",
+     "hintKey": "ooredooBearerTokenDescription"
+    },
+    {
+     "key": "ooredooToNumber",
+     "label": "Recipient Number",
+     "kind": "text",
+     "required": true,
+     "hint": "Enter one or more numbers separated by a comma or space. Local 7-digit numbers are automatically prefixed with 960.",
+     "labelKey": "Recipient Number",
+     "hintKey": "ooredooRecipientDescription"
+    },
+    {
+     "key": "ooredooServerUrl",
+     "label": "API URL",
+     "kind": "text",
+     "required": false,
+     "hint": "Leave blank to use the default Ooredoo endpoint.",
+     "labelKey": "API URL",
+     "hintKey": "Leave blank to use the default Ooredoo endpoint."
+    }
+   ]
+  },
+  {
+   "id": "Opsgenie",
+   "file": "opsgenie.js",
+   "label": "Opsgenie",
+   "category": "Incident management",
+   "fields": [
+    {
+     "key": "opsgenieRegion",
+     "label": "Region",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "us",
+       "label": "US (Default)"
+      },
+      {
+       "value": "eu",
+       "label": "EU"
+      }
+     ]
+    },
+    {
+     "key": "opsgenieApiKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true
+    },
+    {
+     "key": "opsgeniePriority",
+     "label": "Priority",
+     "kind": "number",
+     "required": false,
+     "hint": "* Required https://docs.opsgenie.com/docs/alert-api",
+     "labelKey": "Priority"
+    }
+   ]
+  },
+  {
+   "id": "PagerDuty",
+   "file": "pagerduty.js",
+   "label": "PagerDuty",
+   "category": "Incident management",
+   "fields": [
+    {
+     "key": "pagerdutyIntegrationKey",
+     "label": "Integration Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Integration Key"
+    },
+    {
+     "key": "pagerdutyIntegrationUrl",
+     "label": "Integration URL",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Integration URL",
+     "default": "https://events.pagerduty.com/v2/enqueue"
+    },
+    {
+     "key": "pagerdutyPriority",
+     "label": "Priority",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "info",
+       "label": "info",
+       "labelKey": "info"
+      },
+      {
+       "value": "warning",
+       "label": "warning",
+       "labelKey": "warning"
+      },
+      {
+       "value": "error",
+       "label": "error",
+       "labelKey": "error"
+      },
+      {
+       "value": "critical",
+       "label": "critical",
+       "labelKey": "critical"
+      }
+     ],
+     "labelKey": "Priority"
+    },
+    {
+     "key": "pagerdutyAutoResolve",
+     "label": "Auto resolve or acknowledged",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "0",
+       "label": "do nothing",
+       "labelKey": "do nothing"
+      },
+      {
+       "value": "acknowledge",
+       "label": "auto acknowledged",
+       "labelKey": "auto acknowledged"
+      },
+      {
+       "value": "resolve",
+       "label": "auto resolve",
+       "labelKey": "auto resolve"
+      }
+     ],
+     "labelKey": "Auto resolve or acknowledged"
+    }
+   ]
+  },
+  {
+   "id": "PagerTree",
+   "file": "pagertree.js",
+   "label": "PagerTree",
+   "category": "Incident management",
+   "fields": [
+    {
+     "key": "pagertreeIntegrationUrl",
+     "label": "Integration URL",
+     "kind": "text",
+     "required": false
+    },
+    {
+     "key": "pagertreeUrgency",
+     "label": "Urgency",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "silent",
+       "label": "Silent",
+       "labelKey": "pagertreeSilent"
+      },
+      {
+       "value": "low",
+       "label": "Low",
+       "labelKey": "pagertreeLow"
+      },
+      {
+       "value": "medium",
+       "label": "Medium",
+       "labelKey": "pagertreeMedium"
+      },
+      {
+       "value": "high",
+       "label": "High",
+       "labelKey": "pagertreeHigh"
+      },
+      {
+       "value": "critical",
+       "label": "Critical",
+       "labelKey": "pagertreeCritical"
+      }
+     ],
+     "labelKey": "pagertreeUrgency"
+    },
+    {
+     "key": "pagertreeAutoResolve",
+     "label": "Auto Resolve",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "resolve",
+       "label": "Auto Resolve",
+       "labelKey": "pagertreeResolve"
+      },
+      {
+       "value": "0",
+       "label": "Do Nothing",
+       "labelKey": "pagertreeDoNothing"
+      }
+     ],
+     "labelKey": "pagertreeResolve"
+    }
+   ]
+  },
+  {
+   "id": "pinglet",
+   "file": "pinglet.js",
+   "label": "Pinglet",
+   "category": "Push",
+   "fields": [
+    {
+     "key": "pingletPublishUrl",
+     "label": "Topic URL",
+     "kind": "text",
+     "required": true,
+     "hint": "The publish URL of the Pinglet topic to send alerts to, e.g. https://app.pinglet.co.uk/your-namespace/alerts. The topic is created on first publish if it doesn't exist yet.",
+     "hintKey": "pingletTopicUrlDescription"
+    },
+    {
+     "key": "pingletApiKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true
+    }
+   ]
+  },
+  {
+   "id": "plivo",
+   "file": "plivo.js",
+   "label": "Plivo",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "plivoAuthID",
+     "label": "Auth ID",
+     "kind": "text",
+     "required": true,
+     "hint": "Your Plivo Auth ID from the Plivo Console",
+     "labelKey": "plivoAuthID",
+     "hintKey": "plivoAuthIDHelptext"
+    },
+    {
+     "key": "plivoAuthToken",
+     "label": "Auth Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "Your Plivo Auth Token from the Plivo Console",
+     "labelKey": "plivoAuthToken",
+     "hintKey": "plivoAuthTokenHelptext"
+    },
+    {
+     "key": "plivoFromNumber",
+     "label": "From Number",
+     "kind": "text",
+     "required": true,
+     "hint": "The Plivo phone number to send from (e.g. +15551234567). SMS may also use an approved alphanumeric sender ID; voice calls require a Plivo phone number.",
+     "labelKey": "plivoFromNumber",
+     "hintKey": "plivoFromNumberHelptext"
+    },
+    {
+     "key": "plivoToNumber",
+     "label": "To Number",
+     "kind": "text",
+     "required": true,
+     "hint": "The destination phone number that receives the SMS or voice call (e.g. +15559876543)",
+     "labelKey": "plivoToNumber",
+     "hintKey": "plivoToNumberHelptext"
+    },
+    {
+     "key": "plivoMessageType",
+     "label": "Message Type",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "sms",
+       "label": "SMS"
+      },
+      {
+       "value": "call",
+       "label": "Voice Call",
+       "labelKey": "plivoVoiceCall"
+      }
+     ],
+     "hint": "URL that returns Plivo XML for the call. The alert text is appended as a ?message= query parameter, so your endpoint can return e.g. ….",
+     "labelKey": "plivoMessageType",
+     "hintKey": "plivoAnswerUrlHelptext",
+     "default": "sms"
+    },
+    {
+     "key": "plivoAnswerUrl",
+     "label": "Answer URL",
+     "kind": "text",
+     "required": true,
+     "hint": "URL that returns Plivo XML for the call. The alert text is appended as a ?message= query parameter, so your endpoint can return e.g. ….",
+     "showIf": {
+      "key": "plivoMessageType",
+      "equals": "call"
+     },
+     "labelKey": "plivoAnswerUrl",
+     "hintKey": "plivoAnswerUrlHelptext"
+    }
+   ]
+  },
+  {
+   "id": "promosms",
+   "file": "promosms.js",
+   "label": "PromoSMS",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "promosmsLogin",
+     "label": "API Login Name",
+     "kind": "text",
+     "required": true,
+     "labelKey": "promosmsLogin"
+    },
+    {
+     "key": "promosmsPassword",
+     "label": "API Password",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "promosmsPassword"
+    },
+    {
+     "key": "promosmsSMSType",
+     "label": "SMS Type",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "0",
+       "label": "SMS FLASH - Message will automatically show on recipient device. Limited only to Polish recipients.",
+       "labelKey": "promosmsTypeFlash"
+      },
+      {
+       "value": "1",
+       "label": "SMS ECO - cheap but slow and often overloaded. Limited only to Polish recipients.",
+       "labelKey": "promosmsTypeEco"
+      },
+      {
+       "value": "3",
+       "label": "SMS FULL - Premium tier of SMS, You can use your Sender Name (You need to register name first). Reliable for alerts.",
+       "labelKey": "promosmsTypeFull"
+      },
+      {
+       "value": "4",
+       "label": "SMS SPEED - Highest priority in system. Very quick and reliable but costly (about twice of SMS FULL price).",
+       "labelKey": "promosmsTypeSpeed"
+      }
+     ],
+     "labelKey": "SMS Type"
+    },
+    {
+     "key": "promosmsPhoneNumber",
+     "label": "Phone number (for Polish recipient You can skip area codes)",
+     "kind": "text",
+     "required": true,
+     "labelKey": "promosmsPhoneNumber"
+    },
+    {
+     "key": "promosmsSenderName",
+     "label": "SMS Sender Name : Pre-registred name or one of defaults: InfoSMS, SMS Info, MaxSMS, INFO, SMS",
+     "kind": "text",
+     "required": false,
+     "labelKey": "promosmsSMSSender"
+    },
+    {
+     "key": "promosmsAllowLongSMS",
+     "label": "Allow long SMS",
+     "kind": "checkbox",
+     "required": false,
+     "labelKey": "promosmsAllowLongSMS"
+    }
+   ]
+  },
+  {
+   "id": "pumble",
+   "file": "pumble.js",
+   "label": "Pumble",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "webhookURL",
+     "label": "Webhook URL",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Webhook URL"
+    }
+   ]
+  },
+  {
+   "id": "PushByTechulus",
+   "file": "techulus-push.js",
+   "label": "Push by Techulus",
+   "category": "Push",
+   "fields": [
+    {
+     "key": "pushAPIKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true,
+     "hint": "Alphanumerical string and hyphens only",
+     "labelKey": "API Key",
+     "hintKey": "Alphanumerical string and hyphens only"
+    },
+    {
+     "key": "pushTitle",
+     "label": "Title",
+     "kind": "text",
+     "required": false,
+     "hint": "Alphanumerical string and hyphens only",
+     "labelKey": "Title",
+     "hintKey": "Alphanumerical string and hyphens only",
+     "default": "Uptime-Kuma"
+    },
+    {
+     "key": "pushChannel",
+     "label": "Notification Channel",
+     "kind": "text",
+     "required": false,
+     "hint": "Alphanumerical string and hyphens only",
+     "labelKey": "Notification Channel",
+     "hintKey": "Alphanumerical string and hyphens only",
+     "default": "uptime-kuma"
+    },
+    {
+     "key": "pushSound",
+     "label": "Sound",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "default",
+       "label": "Default",
+       "labelKey": "Default"
+      },
+      {
+       "value": "arcade",
+       "label": "Arcade",
+       "labelKey": "Arcade"
+      },
+      {
+       "value": "correct",
+       "label": "Correct",
+       "labelKey": "Correct"
+      },
+      {
+       "value": "fail",
+       "label": "Fail",
+       "labelKey": "Fail"
+      },
+      {
+       "value": "harp",
+       "label": "Harp",
+       "labelKey": "Harp"
+      },
+      {
+       "value": "reveal",
+       "label": "Reveal",
+       "labelKey": "Reveal"
+      },
+      {
+       "value": "bubble",
+       "label": "Bubble",
+       "labelKey": "Bubble"
+      },
+      {
+       "value": "doorbell",
+       "label": "Doorbell",
+       "labelKey": "Doorbell"
+      },
+      {
+       "value": "flute",
+       "label": "Flute",
+       "labelKey": "Flute"
+      },
+      {
+       "value": "money",
+       "label": "Money",
+       "labelKey": "Money"
+      },
+      {
+       "value": "scifi",
+       "label": "Scifi",
+       "labelKey": "Scifi"
+      },
+      {
+       "value": "clear",
+       "label": "Clear",
+       "labelKey": "Clear"
+      },
+      {
+       "value": "elevator",
+       "label": "Elevator",
+       "labelKey": "Elevator"
+      },
+      {
+       "value": "guitar",
+       "label": "Guitar",
+       "labelKey": "Guitar"
+      },
+      {
+       "value": "pop",
+       "label": "Pop",
+       "labelKey": "Pop"
+      }
+     ],
+     "labelKey": "Sound",
+     "default": "default"
+    },
+    {
+     "key": "pushTimeSensitive",
+     "label": "Time Sensitive (iOS Only)",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "Time sensitive notifications will be delivered immediately, even if the device is in do not disturb mode.",
+     "labelKey": "Time Sensitive (iOS Only)",
+     "hintKey": "Time sensitive notifications will be delivered immediately, even if the device is in do not disturb mode.",
+     "default": true
+    }
+   ]
+  },
+  {
+   "id": "pushbullet",
+   "file": "pushbullet.js",
+   "label": "Pushbullet",
+   "category": "Push",
+   "fields": [
+    {
+     "key": "pushbulletAccessToken",
+     "label": "Access Token",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Access Token"
+    }
+   ]
+  },
+  {
+   "id": "PushDeer",
+   "file": "pushdeer.js",
+   "label": "PushDeer",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "pushdeerServer",
+     "label": "PushDeer Server URL",
+     "kind": "text",
+     "required": false,
+     "hint": "Leave blank to use the official server",
+     "labelKey": "PushDeer Server URL",
+     "hintKey": "pushDeerServerDescription"
+    },
+    {
+     "key": "pushdeerKey",
+     "label": "PushDeer Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "PushDeer Key"
+    }
+   ]
+  },
+  {
+   "id": "pushover",
+   "file": "pushover.js",
+   "label": "Pushover",
+   "category": "Push",
+   "fields": [
+    {
+     "key": "pushoveruserkey",
+     "label": "User Key",
+     "kind": "secret",
+     "required": true
+    },
+    {
+     "key": "pushoverapptoken",
+     "label": "Application Token",
+     "kind": "secret",
+     "required": true
+    },
+    {
+     "key": "pushoverdevice",
+     "label": "Message Title",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Message Title"
+    },
+    {
+     "key": "pushovertitle",
+     "label": "Pushovertitle",
+     "kind": "text",
+     "required": false
+    },
+    {
+     "key": "pushoverpriority",
+     "label": "Priority",
+     "kind": "text",
+     "required": false,
+     "options": [],
+     "labelKey": "Priority"
+    },
+    {
+     "key": "pushoversounds",
+     "label": "Notification Sound - Down",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "sound",
+       "label": "{{ $t(`pushoversounds ${sound}`) }}"
+      }
+     ]
+    },
+    {
+     "key": "pushoversounds_up",
+     "label": "Notification Sound - Up",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "sound",
+       "label": "{{ $t(`pushoversounds ${sound}`) }}"
+      }
+     ]
+    },
+    {
+     "key": "pushoverttl",
+     "label": "Message TTL (Seconds)",
+     "kind": "number",
+     "required": false,
+     "hint": "* Required https://pushover.net/api Emergency priority (2) has default 30 second timeout between retries and will expire after 1 hour.",
+     "labelKey": "pushoverMessageTtl"
+    }
+   ]
+  },
+  {
+   "id": "PushPlus",
+   "file": "pushplus.js",
+   "label": "PushPlus (推送加)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "pushPlusSendKey",
+     "label": "SendKey",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "SendKey"
+    }
+   ]
+  },
+  {
+   "id": "pushy",
+   "file": "pushy.js",
+   "label": "Pushy",
+   "category": "Push",
+   "fields": [
+    {
+     "key": "pushyAPIKey",
+     "label": "Secret API Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "pushyAPIKey"
+    },
+    {
+     "key": "pushyToken",
+     "label": "Device token",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "pushyToken"
+    }
+   ]
+  },
+  {
+   "id": "Resend",
+   "file": "resend.js",
+   "label": "Resend",
+   "category": "Email",
+   "fields": [
+    {
+     "key": "resendApiKey",
+     "label": "Resend API Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "resendApiKey"
+    },
+    {
+     "key": "resendFromEmail",
+     "label": "From Email",
+     "kind": "text",
+     "required": true,
+     "hint": "leave blank for default name",
+     "labelKey": "resendFromEmail",
+     "hintKey": "resendLeaveBlankForDefaultName"
+    },
+    {
+     "key": "resendFromName",
+     "label": "From Name",
+     "kind": "text",
+     "required": false,
+     "hint": "leave blank for default name",
+     "labelKey": "resendFromName",
+     "hintKey": "resendLeaveBlankForDefaultName",
+     "default": "Uptime Kuma"
+    },
+    {
+     "key": "resendToEmail",
+     "label": "To Email",
+     "kind": "text",
+     "required": true,
+     "labelKey": "resendToEmail"
+    },
+    {
+     "key": "resendSubject",
+     "label": "Subject",
+     "kind": "text",
+     "required": false,
+     "labelKey": "resendSubject",
+     "default": "Notification from Your Uptime Kuma"
+    }
+   ]
+  },
+  {
+   "id": "rocket.chat",
+   "file": "rocket-chat.js",
+   "label": "Rocket.Chat",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "rocketwebhookURL",
+     "label": "Webhook URL",
+     "kind": "text",
+     "required": true
+    },
+    {
+     "key": "rocketusername",
+     "label": "Username",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Username"
+    },
+    {
+     "key": "rocketiconemo",
+     "label": "Icon Emoji",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Icon Emoji"
+    },
+    {
+     "key": "rocketchannel",
+     "label": "Rocketchannel",
+     "kind": "text",
+     "required": false,
+     "hint": "* Required https://docs.rocket.chat/guides/administration/administration/integrations Enter the channel name on … Channel Name field if you want to bypass the Webhook channel. Ex: #other-channel"
+    }
+   ]
+  },
+  {
+   "id": "SendGrid",
+   "file": "send-grid.js",
+   "label": "SendGrid",
+   "category": "Email",
+   "fields": [
+    {
+     "key": "sendgridApiKey",
+     "label": "Api Key",
+     "kind": "secret",
+     "required": true
+    },
+    {
+     "key": "sendgridFromEmail",
+     "label": "From Email",
+     "kind": "text",
+     "required": true,
+     "hint": "Separate multiple email addresses with commas",
+     "labelKey": "From Email",
+     "hintKey": "Separate multiple email addresses with commas"
+    },
+    {
+     "key": "sendgridToEmail",
+     "label": "To Email",
+     "kind": "text",
+     "required": true,
+     "hint": "Separate multiple email addresses with commas",
+     "labelKey": "To Email",
+     "hintKey": "Separate multiple email addresses with commas"
+    },
+    {
+     "key": "sendgridCcEmail",
+     "label": "CC",
+     "kind": "text",
+     "required": false,
+     "hint": "Separate multiple email addresses with commas",
+     "labelKey": "smtpCC",
+     "hintKey": "Separate multiple email addresses with commas"
+    },
+    {
+     "key": "sendgridBccEmail",
+     "label": "BCC",
+     "kind": "text",
+     "required": false,
+     "labelKey": "smtpBCC"
+    },
+    {
+     "key": "sendgridSubject",
+     "label": "Subject:",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Subject:",
+     "default": "Notification from Your Uptime Kuma"
+    }
+   ]
+  },
+  {
+   "id": "ServerChan",
+   "file": "serverchan.js",
+   "label": "ServerChan (Server酱)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "serverChanSendKey",
+     "label": "SendKey",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "SendKey"
+    }
+   ]
+  },
+  {
+   "id": "serwersms",
+   "file": "serwersms.js",
+   "label": "SerwerSMS.pl",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "serwersmsUsername",
+     "label": "API Username (incl. webapi_ prefix)",
+     "kind": "text",
+     "required": true,
+     "labelKey": "serwersmsAPIUser"
+    },
+    {
+     "key": "serwersmsPassword",
+     "label": "API Password",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "serwersmsAPIPassword"
+    },
+    {
+     "key": "serwersmsRecipientType",
+     "label": "Recipient type",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "phone",
+       "label": "Phone number",
+       "labelKey": "serwersmsRecipientTypePhone"
+      },
+      {
+       "value": "group",
+       "label": "Group",
+       "labelKey": "serwersmsRecipientTypeGroup"
+      }
+     ],
+     "labelKey": "serwersmsRecipientType"
+    },
+    {
+     "key": "serwersmsPhoneNumber",
+     "label": "Phone number",
+     "kind": "text",
+     "required": false,
+     "hint": "ID or group IDs in the Customer Panel. These identifiers can be downloaded using action groups / index or by copying them from the editing group in the Customer Panel.",
+     "labelKey": "serwersmsPhoneNumber",
+     "hintKey": "serwersmsGroupIdHelptext"
+    },
+    {
+     "key": "serwersmsGroupId",
+     "label": "Group ID",
+     "kind": "text",
+     "required": true,
+     "hint": "ID or group IDs in the Customer Panel. These identifiers can be downloaded using action groups / index or by copying them from the editing group in the Customer Panel.",
+     "showIf": {
+      "key": "serwersmsRecipientType",
+      "equals": "group"
+     },
+     "labelKey": "serwersmsGroupId",
+     "hintKey": "serwersmsGroupIdHelptext"
+    },
+    {
+     "key": "serwersmsSenderName",
+     "label": "SMS Sender Name (registered via customer portal)",
+     "kind": "text",
+     "required": false,
+     "labelKey": "serwersmsSenderName"
+    }
+   ]
+  },
+  {
+   "id": "SevenIO",
+   "file": "sevenio.js",
+   "label": "SevenIO",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "sevenioApiKey",
+     "label": "SevenIO API Key",
+     "kind": "secret",
+     "required": true,
+     "hint": "Visit the dashboard under app.seven.io > developer > api key > the green add button",
+     "labelKey": "apiKeySevenIO",
+     "hintKey": "wayToGetSevenIOApiKey"
+    },
+    {
+     "key": "sevenioSender",
+     "label": "Sending number or name",
+     "kind": "text",
+     "required": false,
+     "hint": "If the receiving number is not located in Germany, you have to add the country code in front of the number (e.g. for the country code 1 from the US use 117612121212 instead of 017612121212)",
+     "labelKey": "senderSevenIO",
+     "hintKey": "receiverInfoSevenIO"
+    },
+    {
+     "key": "sevenioReceiver",
+     "label": "Receiving number",
+     "kind": "number",
+     "required": true,
+     "hint": "If the receiving number is not located in Germany, you have to add the country code in front of the number (e.g. for the country code 1 from the US use 117612121212 instead of 017612121212)",
+     "labelKey": "receiverSevenIO",
+     "hintKey": "receiverInfoSevenIO"
+    }
+   ]
+  },
+  {
+   "id": "signal",
+   "file": "signal.js",
+   "label": "Signal",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "signalURL",
+     "label": "Post URL",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Post URL"
+    },
+    {
+     "key": "signalNumber",
+     "label": "Number",
+     "kind": "text",
+     "required": true,
+     "hint": "You need to have a signal client with REST API.",
+     "labelKey": "Number"
+    },
+    {
+     "key": "signalRecipients",
+     "label": "Recipients",
+     "kind": "text",
+     "required": true,
+     "hint": "You need to have a signal client with REST API.",
+     "labelKey": "Recipients"
+    },
+    {
+     "key": "signalUseTemplate",
+     "label": "Use custom message template",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "If enabled, the message will be sent using a custom template. You can use Liquid templating to customize the notification format.",
+     "labelKey": "signalUseTemplate",
+     "hintKey": "signalUseTemplateDescription"
+    },
+    {
+     "key": "signalTemplate",
+     "label": "Message Template",
+     "kind": "text",
+     "required": true,
+     "showIf": {
+      "key": "signalUseTemplate",
+      "equals": true
+     },
+     "labelKey": "Message Template"
+    }
+   ]
+  },
+  {
+   "id": "signalgrid",
+   "file": "signalgrid.js",
+   "label": "Signalgrid",
+   "category": "Push",
+   "fields": [
+    {
+     "key": "signalgridClientKey",
+     "label": "Client Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Client Key"
+    },
+    {
+     "key": "signalgridChannel",
+     "label": "Channel",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Channel"
+    }
+   ]
+  },
+  {
+   "id": "SIGNL4",
+   "file": "signl4.js",
+   "label": "SIGNL4",
+   "category": "Incident management",
+   "fields": [
+    {
+     "key": "webhookURL",
+     "label": "SIGNL4 Webhook URL",
+     "kind": "text",
+     "required": true,
+     "labelKey": "SIGNL4 Webhook URL"
+    }
+   ]
+  },
+  {
+   "id": "SMSGateway",
+   "file": "sms-gateway.js",
+   "label": "SMS Gateway",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "smsgatewayUrl",
+     "label": "Server URL",
+     "kind": "text",
+     "required": true,
+     "hint": "The base URL of your SMS Gateway, without an API path.",
+     "labelKey": "Server URL",
+     "hintKey": "smsgatewayUrlHelptext"
+    },
+    {
+     "key": "smsgatewayApiKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true,
+     "hint": "Comma-separated list of recipient phone numbers in international format (e.g. +15551234567)",
+     "labelKey": "API Key",
+     "hintKey": "smsgatewayToHelptext"
+    },
+    {
+     "key": "smsgatewayTo",
+     "label": "Phone Number(s)",
+     "kind": "text",
+     "required": true,
+     "hint": "Comma-separated list of recipient phone numbers in international format (e.g. +15551234567)",
+     "labelKey": "smsgatewayTo",
+     "hintKey": "smsgatewayToHelptext"
+    }
+   ]
+  },
+  {
+   "id": "SMSPartner",
+   "file": "smspartner.js",
+   "label": "SMS Partner",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "smspartnerApikey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true,
+     "hint": "my.smspartner.fr/dashboard/api",
+     "labelKey": "API Key"
+    },
+    {
+     "key": "smspartnerPhoneNumber",
+     "label": "Phone number(s)",
+     "kind": "text",
+     "required": true,
+     "hint": "+336xxxxxxxx +496xxxxxxxx ,",
+     "labelKey": "smspartnerPhoneNumber"
+    },
+    {
+     "key": "smspartnerSenderName",
+     "label": "SMS Sender Name",
+     "kind": "text",
+     "required": true,
+     "hint": "Must be between 3..=11 regular characters",
+     "labelKey": "smspartnerSenderName",
+     "hintKey": "smspartnerSenderNameInfo"
+    }
+   ]
+  },
+  {
+   "id": "smsir",
+   "file": "smsir.js",
+   "label": "SMS.IR",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "smsirApiKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "API Key"
+    },
+    {
+     "key": "smsirNumber",
+     "label": "Recipient Numbers",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Recipient Numbers"
+    },
+    {
+     "key": "smsirTemplate",
+     "label": "Template ID",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Template ID"
+    }
+   ]
+  },
+  {
+   "id": "smsc",
+   "file": "smsc.js",
+   "label": "SMSC",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "smscLogin",
+     "label": "API Username",
+     "kind": "text",
+     "required": true,
+     "labelKey": "API Username"
+    },
+    {
+     "key": "smscPassword",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "API Key"
+    },
+    {
+     "key": "smscToNumber",
+     "label": "Recipient Number",
+     "kind": "text",
+     "required": true,
+     "hint": "Leave blank to use a shared sender number.",
+     "labelKey": "Recipient Number",
+     "hintKey": "Leave blank to use a shared sender number."
+    },
+    {
+     "key": "smscSenderName",
+     "label": "From Name/Number",
+     "kind": "text",
+     "required": false,
+     "hint": "Leave blank to use a shared sender number.",
+     "labelKey": "From Name/Number",
+     "hintKey": "Leave blank to use a shared sender number."
+    },
+    {
+     "key": "smscTranslit",
+     "label": "smscTranslit",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "0",
+       "label": "Default",
+       "labelKey": "Default"
+      },
+      {
+       "value": "1",
+       "label": "Translit"
+      },
+      {
+       "value": "2",
+       "label": "MpaHc/Ium"
+      }
+     ],
+     "labelKey": "smscTranslit"
+    }
+   ]
+  },
+  {
+   "id": "SMSEagle",
+   "file": "smseagle.js",
+   "label": "SMSEagle",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "smseagleUrl",
+     "label": "Your SMSEagle device URL",
+     "kind": "text",
+     "required": true,
+     "labelKey": "smseagleUrl"
+    },
+    {
+     "key": "smseagleToken",
+     "label": "API Access token",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "smseagleToken"
+    },
+    {
+     "key": "smseagleApiType",
+     "label": "API version",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "smseagle-apiv1",
+       "label": "APIv1 (for existing projects and backward compatibility)",
+       "labelKey": "smseagleApiv1"
+      },
+      {
+       "value": "smseagle-apiv2",
+       "label": "APIv2 (recommended for new integrations)",
+       "labelKey": "smseagleApiv2"
+      }
+     ],
+     "labelKey": "smseagleApiType",
+     "default": "smseagle-apiv1"
+    },
+    {
+     "key": "smseagleRecipientType",
+     "label": "Recipient type",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "smseagle-to",
+       "label": "Phone number(s)",
+       "labelKey": "smseagleTo"
+      },
+      {
+       "value": "smseagle-group",
+       "label": "Phonebook group name(s)",
+       "labelKey": "smseagleGroup"
+      },
+      {
+       "value": "smseagle-contact",
+       "label": "Phonebook contact name(s)",
+       "labelKey": "smseagleContact"
+      }
+     ],
+     "showIf": {
+      "key": "smseagleApiType",
+      "equals": "smseagle-apiv1"
+     },
+     "labelKey": "smseagleRecipientType",
+     "default": "smseagle-to"
+    },
+    {
+     "key": "smseagleRecipient",
+     "label": "Recipient(s) (multiple must be separated with comma)",
+     "kind": "text",
+     "required": true,
+     "showIf": {
+      "key": "smseagleApiType",
+      "equals": "smseagle-apiv1"
+     },
+     "labelKey": "smseagleRecipient"
+    },
+    {
+     "key": "smseaglePriority",
+     "label": "Message priority (0-9, highest priority = 9)",
+     "kind": "number",
+     "required": false,
+     "labelKey": "smseaglePriority"
+    },
+    {
+     "key": "smseagleEncoding",
+     "label": "Send as Unicode (default=GSM-7)",
+     "kind": "checkbox",
+     "required": false,
+     "labelKey": "smseagleEncoding"
+    },
+    {
+     "key": "smseagleMsgType",
+     "label": "Message type",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "smseagle-sms",
+       "label": "Sms message (default)",
+       "labelKey": "smseagleMsgSms"
+      },
+      {
+       "value": "smseagle-ring",
+       "label": "Ring call",
+       "labelKey": "smseagleMsgRing"
+      },
+      {
+       "value": "smseagle-tts",
+       "label": "Text-to-speech call",
+       "labelKey": "smseagleMsgTts"
+      },
+      {
+       "value": "smseagle-tts-advanced",
+       "label": "Text-to-speech Advanced call",
+       "labelKey": "smseagleMsgTtsAdvanced"
+      }
+     ],
+     "showIf": {
+      "key": "smseagleRecipientType",
+      "equals": "smseagle-to"
+     },
+     "labelKey": "smseagleMsgType",
+     "default": "smseagle-sms"
+    },
+    {
+     "key": "smseagleDuration",
+     "label": "Duration (in seconds)",
+     "kind": "number",
+     "required": false,
+     "labelKey": "smseagleDuration"
+    },
+    {
+     "key": "smseagleTtsModel",
+     "label": "Text-to-speech model ID",
+     "kind": "number",
+     "required": true,
+     "showIf": {
+      "key": "smseagleMsgType",
+      "equals": "smseagle-tts-advanced"
+     },
+     "labelKey": "smseagleTtsModel"
+    },
+    {
+     "key": "smseagleRecipientTo",
+     "label": "Phone number(s)",
+     "kind": "text",
+     "required": false,
+     "showIf": {
+      "key": "smseagleApiType",
+      "equals": "smseagle-apiv2"
+     },
+     "labelKey": "smseagleTo"
+    },
+    {
+     "key": "smseagleRecipientGroup",
+     "label": "Phonebook group ID(s)",
+     "kind": "text",
+     "required": false,
+     "showIf": {
+      "key": "smseagleApiType",
+      "equals": "smseagle-apiv2"
+     },
+     "labelKey": "smseagleGroupV2"
+    },
+    {
+     "key": "smseagleRecipientContact",
+     "label": "Phonebook contact ID(s)",
+     "kind": "text",
+     "required": false,
+     "showIf": {
+      "key": "smseagleApiType",
+      "equals": "smseagle-apiv2"
+     },
+     "labelKey": "smseagleContactV2"
+    }
+   ]
+  },
+  {
+   "id": "SMSManager",
+   "file": "smsmanager.js",
+   "label": "SmsManager (smsmanager.cz)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "smsmanagerApiKey",
+     "label": "API Key",
+     "kind": "text",
+     "required": false,
+     "labelKey": "API Key"
+    },
+    {
+     "key": "numbers",
+     "label": "Recipients",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Recipients"
+    },
+    {
+     "key": "messageType",
+     "label": "Gateway Type",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "economy",
+       "label": "Economy",
+       "labelKey": "Economy"
+      },
+      {
+       "value": "lowcost",
+       "label": "Lowcost",
+       "labelKey": "Lowcost"
+      },
+      {
+       "value": "high",
+       "label": "High",
+       "labelKey": "High"
+      }
+     ],
+     "labelKey": "Gateway Type"
+    }
+   ]
+  },
+  {
+   "id": "SMSPlanet",
+   "file": "sms-planet.js",
+   "label": "SMSPlanet.pl",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "smsplanetApiToken",
+     "label": "Token for the SMSPlanet API",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "smsplanetApiToken"
+    },
+    {
+     "key": "smsplanetPhoneNumbers",
+     "label": "Phone numbers",
+     "kind": "textarea",
+     "required": true,
+     "hint": "Needs to be approved in the client panel",
+     "labelKey": "Phone numbers",
+     "hintKey": "smsplanetNeedToApproveName"
+    },
+    {
+     "key": "smsplanetSenderName",
+     "label": "Sender name",
+     "kind": "text",
+     "required": false,
+     "hint": "Needs to be approved in the client panel",
+     "labelKey": "Sender name",
+     "hintKey": "smsplanetNeedToApproveName"
+    }
+   ]
+  },
+  {
+   "id": "Splunk",
+   "file": "splunk.js",
+   "label": "Splunk",
+   "category": "Incident management",
+   "fields": [
+    {
+     "key": "splunkRestURL",
+     "label": "Splunk Rest URL",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Splunk Rest URL"
+    },
+    {
+     "key": "splunkSeverity",
+     "label": "Severity",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "INFO",
+       "label": "info",
+       "labelKey": "info"
+      },
+      {
+       "value": "WARNING",
+       "label": "warning",
+       "labelKey": "warning"
+      },
+      {
+       "value": "CRITICAL",
+       "label": "critical",
+       "labelKey": "critical"
+      }
+     ],
+     "labelKey": "Severity"
+    },
+    {
+     "key": "splunkAutoResolve",
+     "label": "Auto resolve or acknowledged",
+     "kind": "select",
+     "required": false,
+     "options": [
+      {
+       "value": "0",
+       "label": "do nothing",
+       "labelKey": "do nothing"
+      },
+      {
+       "value": "ACKNOWLEDGEMENT",
+       "label": "auto acknowledged",
+       "labelKey": "auto acknowledged"
+      },
+      {
+       "value": "RECOVERY",
+       "label": "auto resolve",
+       "labelKey": "auto resolve"
+      }
+     ],
+     "labelKey": "Auto resolve or acknowledged"
+    }
+   ]
+  },
+  {
+   "id": "SpugPush",
+   "file": "spugpush.js",
+   "label": "SpugPush（Spug推送助手）",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "templateKey",
+     "label": "Template Code",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "SpugPush Template Code"
+    }
+   ]
+  },
+  {
+   "id": "squadcast",
+   "file": "squadcast.js",
+   "label": "SquadCast",
+   "category": "Incident management",
+   "fields": [
+    {
+     "key": "squadcastWebhookURL",
+     "label": "Post URL",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Post URL"
+    }
+   ]
+  },
+  {
+   "id": "stackfield",
+   "file": "stackfield.js",
+   "label": "Stackfield",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "stackfieldwebhookURL",
+     "label": "Webhook URL",
+     "kind": "text",
+     "required": true,
+     "hint": "* Required https://www.stackfield.com/developer-api#AnchorAPI2"
+    }
+   ]
+  },
+  {
+   "id": "telegram",
+   "file": "telegram.js",
+   "label": "Telegram",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "telegramBotToken",
+     "label": "Bot Token",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Bot Token"
+    },
+    {
+     "key": "telegramChatID",
+     "label": "Chat ID",
+     "kind": "text",
+     "required": true,
+     "hint": "Support Direct Chat / Group / Channel's Chat ID You can get your chat ID by sending a message to the bot and going to this URL to view the chat_id:",
+     "labelKey": "Chat ID"
+    },
+    {
+     "key": "telegramMessageThreadID",
+     "label": "(Optional) Message Thread ID",
+     "kind": "text",
+     "required": false,
+     "hint": "Optional Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+     "labelKey": "telegramMessageThreadID",
+     "hintKey": "telegramMessageThreadIDDescription"
+    },
+    {
+     "key": "telegramServerUrl",
+     "label": "(Optional) Server Url",
+     "kind": "text",
+     "required": false,
+     "hint": "here https://api.telegram.org",
+     "labelKey": "telegramServerUrl",
+     "default": "https://api.telegram.org"
+    },
+    {
+     "key": "telegramUseTemplate",
+     "label": "Use custom message template",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "If enabled, the message will be sent using a custom template.",
+     "labelKey": "telegramUseTemplate",
+     "hintKey": "telegramUseTemplateDescription"
+    },
+    {
+     "key": "telegramTemplateParseMode",
+     "label": "Message Format",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "plain",
+       "label": "Plain Text",
+       "labelKey": "Plain Text"
+      },
+      {
+       "value": "HTML",
+       "label": "HTML"
+      },
+      {
+       "value": "MarkdownV2",
+       "label": "MarkdownV2"
+      }
+     ],
+     "showIf": {
+      "key": "telegramUseTemplate",
+      "equals": true
+     },
+     "labelKey": "Message Format"
+    },
+    {
+     "key": "telegramTemplate",
+     "label": "Message Template",
+     "kind": "text",
+     "required": true,
+     "hint": "Sends the message silently. Users will receive a notification with no sound.",
+     "showIf": {
+      "key": "telegramUseTemplate",
+      "equals": true
+     },
+     "labelKey": "Message Template",
+     "hintKey": "telegramSendSilentlyDescription"
+    },
+    {
+     "key": "telegramSendSilently",
+     "label": "Send Silently",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "Sends the message silently. Users will receive a notification with no sound.",
+     "labelKey": "telegramSendSilently",
+     "hintKey": "telegramSendSilentlyDescription"
+    },
+    {
+     "key": "telegramProtectContent",
+     "label": "Protect Forwarding/Saving",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "If enabled, the bot messages in Telegram will be protected from forwarding and saving.",
+     "labelKey": "telegramProtectContent",
+     "hintKey": "telegramProtectContentDescription"
+    }
+   ]
+  },
+  {
+   "id": "telnyx",
+   "file": "telnyx.js",
+   "label": "Telnyx",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "telnyxApiKey",
+     "label": "API Key (V2)",
+     "kind": "secret",
+     "required": true,
+     "hint": "Your Telnyx V2 API key from the Telnyx Portal under API Keys",
+     "labelKey": "telnyxApiKey",
+     "hintKey": "telnyxApiKeyHelptext"
+    },
+    {
+     "key": "telnyxPhoneNumber",
+     "label": "From Number",
+     "kind": "text",
+     "required": true,
+     "hint": "Your Telnyx phone number to send from (must be registered in your Telnyx account, e.g. +15551234567)",
+     "labelKey": "telnyxPhoneNumber",
+     "hintKey": "telnyxPhoneNumberHelptext"
+    },
+    {
+     "key": "telnyxToNumber",
+     "label": "To Number",
+     "kind": "text",
+     "required": true,
+     "hint": "The destination phone number to receive SMS notifications (e.g. +15559876543)",
+     "labelKey": "telnyxToNumber",
+     "hintKey": "telnyxToNumberHelptext"
+    },
+    {
+     "key": "telnyxMessagingProfileId",
+     "label": "Messaging Profile ID (optional)",
+     "kind": "text",
+     "required": false,
+     "hint": "Optionally associate a Telnyx Messaging Profile to control sender settings and features",
+     "labelKey": "telnyxMessagingProfileId",
+     "hintKey": "telnyxMessagingProfileIdHelptext"
+    }
+   ]
+  },
+  {
+   "id": "Teltonika",
+   "file": "teltonika.js",
+   "label": "Teltonika SMS Gateway",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "teltonikaUrl",
+     "label": "Your Teltonika device URL",
+     "kind": "text",
+     "required": true,
+     "labelKey": "teltonikaUrl"
+    },
+    {
+     "key": "teltonikaUnsafeTls",
+     "label": "Ignore certificate validation",
+     "kind": "checkbox",
+     "required": false,
+     "labelKey": "teltonikaUnsafeTls"
+    },
+    {
+     "key": "teltonikaUsername",
+     "label": "API username",
+     "kind": "text",
+     "required": true,
+     "labelKey": "teltonikaUsername"
+    },
+    {
+     "key": "teltonikaPassword",
+     "label": "API password",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "teltonikaPassword"
+    },
+    {
+     "key": "teltonikaModem",
+     "label": "Modem Id",
+     "kind": "text",
+     "required": true,
+     "labelKey": "teltonikaModem"
+    },
+    {
+     "key": "teltonikaPhoneNumber",
+     "label": "Phone number",
+     "kind": "text",
+     "required": true,
+     "labelKey": "teltonikaPhoneNumber"
+    }
+   ]
+  },
+  {
+   "id": "threema",
+   "file": "threema.js",
+   "label": "Threema",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "threemaRecipientType",
+     "label": "Recipient Email Address",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "identity",
+       "label": "Threema-ID",
+       "labelKey": "threemaRecipientTypeIdentity"
+      },
+      {
+       "value": "phone",
+       "label": "Phone Number",
+       "labelKey": "threemaRecipientTypePhone"
+      },
+      {
+       "value": "email",
+       "label": "Email Address",
+       "labelKey": "threemaRecipientTypeEmail"
+      }
+     ]
+    },
+    {
+     "key": "threemaRecipient",
+     "label": "Recipient Email Address",
+     "kind": "text",
+     "required": true,
+     "hint": "8 characters",
+     "showIf": {
+      "key": "threemaRecipientType",
+      "equals": "identity"
+     }
+    },
+    {
+     "key": "threemaSenderIdentity",
+     "label": "Gateway-ID",
+     "kind": "text",
+     "required": true,
+     "hint": "8 characters, usually starts with *",
+     "labelKey": "threemaSenderIdentity"
+    },
+    {
+     "key": "threemaSecret",
+     "label": "Gateway-ID Secret",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "threemaApiAuthenticationSecret"
+    }
+   ]
+  },
+  {
+   "id": "TurboSMTP",
+   "file": "turbosmtp.js",
+   "label": "TurboSMTP",
+   "category": "Email",
+   "fields": [
+    {
+     "key": "turbosmtpConsumerKey",
+     "label": "Consumer Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "turbosmtpConsumerKey"
+    },
+    {
+     "key": "turbosmtpConsumerSecret",
+     "label": "Consumer Secret",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "turbosmtpConsumerSecret"
+    },
+    {
+     "key": "turbosmtpRegion",
+     "label": "Region",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "us",
+       "label": "US (Default)"
+      },
+      {
+       "value": "eu",
+       "label": "EU"
+      }
+     ],
+     "labelKey": "Region",
+     "default": "us"
+    },
+    {
+     "key": "turbosmtpFromEmail",
+     "label": "From Email",
+     "kind": "text",
+     "required": true,
+     "hint": "Separate multiple email addresses with commas",
+     "labelKey": "From Email",
+     "hintKey": "Separate multiple email addresses with commas"
+    },
+    {
+     "key": "turbosmtpToEmail",
+     "label": "To Email",
+     "kind": "text",
+     "required": true,
+     "hint": "Separate multiple email addresses with commas",
+     "labelKey": "To Email",
+     "hintKey": "Separate multiple email addresses with commas"
+    },
+    {
+     "key": "turbosmtpCcEmail",
+     "label": "CC",
+     "kind": "text",
+     "required": false,
+     "hint": "Separate multiple email addresses with commas",
+     "labelKey": "smtpCC",
+     "hintKey": "Separate multiple email addresses with commas"
+    },
+    {
+     "key": "turbosmtpBccEmail",
+     "label": "BCC",
+     "kind": "text",
+     "required": false,
+     "hint": "Separate multiple email addresses with commas",
+     "labelKey": "smtpBCC",
+     "hintKey": "Separate multiple email addresses with commas"
+    },
+    {
+     "key": "turbosmtpSubject",
+     "label": "Subject:",
+     "kind": "text",
+     "required": false,
+     "labelKey": "Subject:",
+     "default": "Notification from Your Uptime Kuma"
+    }
+   ]
+  },
+  {
+   "id": "twilio",
+   "file": "twilio.js",
+   "label": "Twilio",
+   "category": "SMS",
+   "fields": [
+    {
+     "key": "twilioAccountSID",
+     "label": "Account SID",
+     "kind": "text",
+     "required": true,
+     "hint": "The API key is optional but recommended. You can provide either Account SID and AuthToken from the may TwilioConsole page or Account SID and the pair of Api Key and Api Key secret",
+     "labelKey": "twilioAccountSID",
+     "hintKey": "twilioApiKeyHelptext"
+    },
+    {
+     "key": "twilioApiKey",
+     "label": "Api Key (optional)",
+     "kind": "text",
+     "required": false,
+     "hint": "The API key is optional but recommended. You can provide either Account SID and AuthToken from the may TwilioConsole page or Account SID and the pair of Api Key and Api Key secret",
+     "labelKey": "twilioApiKey",
+     "hintKey": "twilioApiKeyHelptext"
+    },
+    {
+     "key": "twilioMessagingServiceSID",
+     "label": "Messaging Service SID (optional)",
+     "kind": "text",
+     "required": false,
+     "labelKey": "twilioMessagingServiceSID"
+    },
+    {
+     "key": "twilioAuthToken",
+     "label": "Auth Token / Api Key Secret",
+     "kind": "text",
+     "required": true,
+     "labelKey": "twilioAuthToken"
+    },
+    {
+     "key": "twilioFromNumber",
+     "label": "From Number",
+     "kind": "text",
+     "required": true,
+     "labelKey": "twilioFromNumber"
+    },
+    {
+     "key": "twilioToNumber",
+     "label": "To Number",
+     "kind": "text",
+     "required": true,
+     "labelKey": "twilioToNumber"
+    }
+   ]
+  },
+  {
+   "id": "VK",
+   "file": "vk.js",
+   "label": "VK",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "vkAccessToken",
+     "label": "Access Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "VK API version used for requests. Leave the default unless you specifically need another VK API version for compatibility.",
+     "labelKey": "Access Token",
+     "hintKey": "vkApiVersionDescription"
+    },
+    {
+     "key": "vkApiVersion",
+     "label": "API Version",
+     "kind": "text",
+     "required": true,
+     "hint": "VK API version used for requests. Leave the default unless you specifically need another VK API version for compatibility.",
+     "labelKey": "API Version",
+     "hintKey": "vkApiVersionDescription",
+     "default": "5.199"
+    },
+    {
+     "key": "vkPeerId",
+     "label": "Peer ID",
+     "kind": "text",
+     "required": true,
+     "hint": "Enter the target VK peer_id. This value is sent to the API as-is.",
+     "labelKey": "Peer ID",
+     "hintKey": "vkPeerIdDescription"
+    },
+    {
+     "key": "vkDontParseLinks",
+     "label": "Disable link snippets",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "If enabled, VK will not generate link previews/snippets.",
+     "labelKey": "vkDontParseLinks",
+     "hintKey": "vkDontParseLinksDescription",
+     "default": false
+    }
+   ]
+  },
+  {
+   "id": "VKTeams",
+   "file": "vkteams.js",
+   "label": "VKTeams",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "vkteamsBotToken",
+     "label": "Bot Token",
+     "kind": "secret",
+     "required": true,
+     "hint": "For users, this is their email address. For groups and channels, get the ID from their settings and append …chat.agent",
+     "labelKey": "Bot Token",
+     "hintKey": "VKTeams Chat Id Description"
+    },
+    {
+     "key": "vkteamsChatId",
+     "label": "Chat ID",
+     "kind": "text",
+     "required": true,
+     "hint": "For users, this is their email address. For groups and channels, get the ID from their settings and append …chat.agent",
+     "labelKey": "Chat ID",
+     "hintKey": "VKTeams Chat Id Description"
+    },
+    {
+     "key": "vkteamsBaseUrl",
+     "label": "API URL",
+     "kind": "text",
+     "required": true,
+     "hint": "VKTeams base API URL, may differ in On-Premise solution. Default: https://myteam.mail.ru",
+     "labelKey": "API URL",
+     "hintKey": "VKTeams Base Url Description",
+     "default": "https://myteam.mail.ru"
+    },
+    {
+     "key": "vkteamsUseTemplate",
+     "label": "Use custom message template",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "If enabled, the message will be sent using a custom template.",
+     "labelKey": "VKTeams Use Template",
+     "hintKey": "VKTeams Use Template Description"
+    },
+    {
+     "key": "vkteamsTemplateFormat",
+     "label": "Message Format",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "plain",
+       "label": "Plain Text",
+       "labelKey": "Plain Text"
+      },
+      {
+       "value": "MarkdownV2",
+       "label": "MarkdownV2"
+      },
+      {
+       "value": "HTML",
+       "label": "HTML"
+      }
+     ],
+     "hint": "For message styling, VKTeams supports plain text, MarkdownV2, and HTML formatting.",
+     "showIf": {
+      "key": "vkteamsUseTemplate",
+      "equals": true
+     },
+     "labelKey": "Message Format",
+     "hintKey": "VKTeams Template Format Description",
+     "default": "plain"
+    },
+    {
+     "key": "vkteamsTemplate",
+     "label": "Message Template",
+     "kind": "text",
+     "required": true,
+     "showIf": {
+      "key": "vkteamsUseTemplate",
+      "equals": true
+     },
+     "labelKey": "Message Template"
+    }
+   ]
+  },
+  {
+   "id": "WeCom",
+   "file": "wecom.js",
+   "label": "WeCom (企业微信群机器人)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "weComBotKey",
+     "label": "WeCom Bot Key",
+     "kind": "text",
+     "required": true,
+     "hint": "* Required"
+    },
+    {
+     "key": "weComMentionedMobileList",
+     "label": "WeCom Mentioned Mobile List",
+     "kind": "text",
+     "required": false,
+     "hint": "Enter phone numbers to mention. Separate multiple numbers with commas. Use …all to mention everyone.",
+     "labelKey": "WeCom Mentioned Mobile List",
+     "hintKey": "WeCom Mentioned Mobile List Description"
+    }
+   ]
+  },
+  {
+   "id": "Whatsapp360messenger",
+   "file": "360messenger.js",
+   "label": "WhatsApp (360messenger)",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "Whatsapp360messengerAuthToken",
+     "label": "360messenger API Key",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "360messengerAuthToken"
+    },
+    {
+     "key": "Whatsapp360messengerRecipient",
+     "label": "Recipient phone number(s)",
+     "kind": "text",
+     "required": false,
+     "hint": "Enter one or more phone numbers in international format without a leading plus (e.g. …). Separate multiple numbers with commas.",
+     "labelKey": "360messengerRecipient"
+    },
+    {
+     "key": "Whatsapp360messengerGroupIds",
+     "label": "WhatsApp groups",
+     "kind": "text",
+     "required": false,
+     "labelKey": "360messengerGroupList"
+    },
+    {
+     "key": "Whatsapp360messengerUseTemplate",
+     "label": "Custom message template",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "Enable a custom message template instead of the default message.",
+     "labelKey": "360messengerCustomMessageTemplate",
+     "hintKey": "360messengerEnableCustomMessage"
+    },
+    {
+     "key": "Whatsapp360messengerTemplate",
+     "label": "Message template",
+     "kind": "text",
+     "required": true,
+     "showIf": {
+      "key": "Whatsapp360messengerUseTemplate",
+      "equals": true
+     },
+     "labelKey": "360messengerMessageTemplate"
+    }
+   ]
+  },
+  {
+   "id": "evolution",
+   "file": "evolution.js",
+   "label": "WhatsApp (Evolution)",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "evolutionInstanceName",
+     "label": "Instance Name",
+     "kind": "text",
+     "required": true,
+     "labelKey": "evolutionInstanceName"
+    },
+    {
+     "key": "evolutionApiUrl",
+     "label": "API URL",
+     "kind": "text",
+     "required": false,
+     "labelKey": "API URL"
+    },
+    {
+     "key": "evolutionAuthToken",
+     "label": "Token",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Token"
+    },
+    {
+     "key": "evolutionRecipient",
+     "label": "Phone Number / Contact ID / Group ID",
+     "kind": "text",
+     "required": true,
+     "hint": "The phone number with the international prefix, but without the plus sign at the start (…), the Contact ID (…) or the Group ID (…).",
+     "labelKey": "evolutionRecipient"
+    },
+    {
+     "key": "evolutionUseCustomMessage",
+     "label": "Custom Message (optional)",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "Leave empty to use the default message.",
+     "labelKey": "evolutionCustomMessageTitle",
+     "hintKey": "evolutionCustomMessageDesc"
+    },
+    {
+     "key": "evolutionCustomMessage",
+     "label": "Custom Message",
+     "kind": "text",
+     "required": true,
+     "showIf": {
+      "key": "evolutionUseCustomMessage",
+      "equals": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "openwa",
+   "file": "openwa.js",
+   "label": "WhatsApp (OpenWA)",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "openwaApiUrl",
+     "label": "API URL",
+     "kind": "text",
+     "required": true,
+     "hint": "Your OpenWA Instance URL.",
+     "labelKey": "API URL",
+     "hintKey": "wayToGetOpenwaApiUrl"
+    },
+    {
+     "key": "openwaApiKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": true,
+     "hint": "API key used for your OpenWA instance.",
+     "labelKey": "API Key",
+     "hintKey": "wayToGetOpenwaApiKey"
+    },
+    {
+     "key": "openwaSession",
+     "label": "Session",
+     "kind": "text",
+     "required": true,
+     "hint": "Session ID used by OpenWA to send notifications.",
+     "labelKey": "openwaSession",
+     "hintKey": "wayToGetOpenwaSession"
+    },
+    {
+     "key": "openwaChatId",
+     "label": "Chat ID (Phone Number / Contact ID / Group ID)",
+     "kind": "text",
+     "required": true,
+     "hint": "The phone number with the international prefix, but without the plus sign at the start (…), the Contact ID (…) or the Group ID (…). You can send to multiple Chat IDs by separating them with commas.",
+     "labelKey": "openwaChatId"
+    },
+    {
+     "key": "openwaUseCustomMessage",
+     "label": "Custom Message (optional)",
+     "kind": "checkbox",
+     "required": false,
+     "hint": "Leave empty to use the default message.",
+     "labelKey": "openwaCustomMessageTitle",
+     "hintKey": "openwaCustomMessageDesc"
+    },
+    {
+     "key": "openwaCustomMessage",
+     "label": "Custom Message",
+     "kind": "text",
+     "required": true,
+     "showIf": {
+      "key": "openwaUseCustomMessage",
+      "equals": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "waha",
+   "file": "waha.js",
+   "label": "WhatsApp (WAHA)",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "wahaApiUrl",
+     "label": "API URL",
+     "kind": "text",
+     "required": true,
+     "hint": "Your WAHA Instance URL.",
+     "labelKey": "API URL",
+     "hintKey": "wayToGetWahaApiUrl"
+    },
+    {
+     "key": "wahaApiKey",
+     "label": "API Key",
+     "kind": "secret",
+     "required": false,
+     "hint": "API Key is WHATSAPP_API_KEY environment variable value you used to run WAHA.",
+     "labelKey": "API Key",
+     "hintKey": "wayToGetWahaApiKey"
+    },
+    {
+     "key": "wahaSession",
+     "label": "Session",
+     "kind": "text",
+     "required": true,
+     "hint": "From this session WAHA sends notifications to Chat ID. You can find it in WAHA Dashboard.",
+     "labelKey": "wahaSession",
+     "hintKey": "wayToGetWahaSession"
+    },
+    {
+     "key": "wahaChatId",
+     "label": "Chat ID (Phone Number / Contact ID / Group ID)",
+     "kind": "text",
+     "required": true,
+     "hint": "The phone number with the international prefix, but without the plus sign at the start (…), the Contact ID (…) or the Group ID (…). Notifications are sent to this Chat ID from WAHA Session.",
+     "labelKey": "wahaChatId"
+    }
+   ]
+  },
+  {
+   "id": "whapi",
+   "file": "whapi.js",
+   "label": "WhatsApp (Whapi)",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "whapiApiUrl",
+     "label": "API URL",
+     "kind": "text",
+     "required": false,
+     "labelKey": "API URL"
+    },
+    {
+     "key": "whapiAuthToken",
+     "label": "Token",
+     "kind": "secret",
+     "required": true,
+     "labelKey": "Token"
+    },
+    {
+     "key": "whapiRecipient",
+     "label": "Phone Number / Contact ID / Group ID",
+     "kind": "text",
+     "required": true,
+     "hint": "The phone number with the international prefix, but without the plus sign at the start (…), the Contact ID (…) or the Group ID (…).",
+     "labelKey": "whapiRecipient"
+    }
+   ]
+  },
+  {
+   "id": "WPush",
+   "file": "wpush.js",
+   "label": "WPush(wpush.cn)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "wpushAPIkey",
+     "label": "WPush API Key",
+     "kind": "secret",
+     "required": true
+    },
+    {
+     "key": "wpushChannel",
+     "label": "发送通道",
+     "kind": "select",
+     "required": true,
+     "options": [
+      {
+       "value": "wechat",
+       "label": "微信"
+      },
+      {
+       "value": "sms",
+       "label": "短信"
+      },
+      {
+       "value": "mail",
+       "label": "邮件"
+      },
+      {
+       "value": "feishu",
+       "label": "飞书"
+      },
+      {
+       "value": "dingtalk",
+       "label": "钉钉"
+      },
+      {
+       "value": "wechat_work",
+       "label": "企业微信"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "WxPusher",
+   "file": "wxpusher.js",
+   "label": "WxPusher SPT Push (WxPusher极简推送)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "wxpusherSPT",
+     "label": "WxPusher SPT",
+     "kind": "secret",
+     "required": true
+    }
+   ]
+  },
+  {
+   "id": "YZJ",
+   "file": "yzj.js",
+   "label": "YZJ (云之家自定义机器人)",
+   "category": "Regional",
+   "fields": [
+    {
+     "key": "yzjWebHookUrl",
+     "label": "YZJ Webhook URL",
+     "kind": "text",
+     "required": true
+    },
+    {
+     "key": "yzjToken",
+     "label": "YZJ Robot token",
+     "kind": "secret",
+     "required": true
+    }
+   ]
+  },
+  {
+   "id": "ZohoCliq",
+   "file": "zoho-cliq.js",
+   "label": "ZohoCliq",
+   "category": "Chat",
+   "fields": [
+    {
+     "key": "webhookUrl",
+     "label": "Webhook URL",
+     "kind": "text",
+     "required": true,
+     "labelKey": "Webhook URL"
+    }
+   ]
+  }
+ ]
+}

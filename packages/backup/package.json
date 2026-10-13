@@ -1,0 +1,24 @@
+{
+  "name": "@fudo/backup",
+  "version": "0.40.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fudo/shared": "workspace:*",
+    "pg": "^8.23.0",
+    "pg-copy-streams": "^7"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1",
+    "@types/pg-copy-streams": "^1.2.5",
+    "vitest": "^5.0.2"
+  },
+  "license": "AGPL-3.0-or-later"
+}

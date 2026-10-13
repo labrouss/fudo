@@ -1,0 +1,17 @@
+{
+ "Username": "వినియోగదారు పేరు",
+ "Password": "పాస్వర్డ్",
+ "Token": "టోకెన్",
+ "Server URL": "సర్వర్ URL",
+ "Title": "శీర్షిక",
+ "Priority": "ప్రాధాన్యత",
+ "Normal": "సాధారణ",
+ "Application Token": "అప్లికేషన్ టోకెన్",
+ "info": "సమాచారం",
+ "warning": "హెచ్చరిక",
+ "error": "లోపం",
+ "critical": "ప్రమాదకరమైన",
+ "Webhook URL": "వెబ్‌హుక్ URL",
+ "Post URL": "పోస్ట్ URL",
+ "Default": "డిఫాల్ట్"
+}

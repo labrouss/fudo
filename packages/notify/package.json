@@ -1,0 +1,29 @@
+{
+  "name": "@fudo/notify",
+  "version": "0.40.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./definitions": "./src/definitions.ts",
+    "./message": "./src/message.ts",
+    "./server": "./src/server.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fudo/shared": "workspace:*",
+    "nodemailer": "^10.0.11",
+    "pg": "^8.23.0",
+    "undici": "^8.11.2",
+    "zod": "^4.6.5",
+    "@fudo/kuma-notifications": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^8.0.2",
+    "@types/pg": "^8.23.1",
+    "vitest": "^5.0.2"
+  },
+  "license": "AGPL-3.0-or-later"
+}

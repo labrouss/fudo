@@ -1,0 +1,93 @@
+name: fudo
+
+x-app-env: &app-env
+  NODE_ENV: production
+  LOG_LEVEL: ${LOG_LEVEL:-info}
+  APP_SECRET: ${APP_SECRET:?set APP_SECRET in .env}
+  DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+  PUBLIC_URL: ${PUBLIC_URL:-}
+  LOCALES_DIR: ${LOCALES_DIR:-}
+  SESSION_TTL_HOURS: ${SESSION_TTL_HOURS:-12}
+  COOKIE_SECURE: ${COOKIE_SECURE:-auto}
+  BACKUP_DIR: /backups        # backups made in Settings and by the schedule (volume "backups")
+
+services:
+  db:
+    image: timescale/timescaledb:latest-pg17   # not the -oss image: compression + continuous aggregates are needed
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      TIMESCALEDB_TELEMETRY: "off"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    # Extra or corrected translations / extra themes without rebuilding: mount folders and set
+    # LOCALES_DIR=/locales-extra and THEMES_DIR=/themes-extra (see locales/README.md, themes/README.md)
+    volumes:
+      - backups:/backups
+    #   - ./locales-extra:/locales-extra:ro
+    #   - ./themes-extra:/themes-extra:ro
+    build: { context: ., dockerfile: docker/node.Dockerfile, args: { APP: api } }
+    restart: unless-stopped
+    environment:
+      <<: *app-env
+      API_PORT: "3000"
+    cap_add:
+      - NET_RAW          # "Test now" for Ping monitors runs in the API
+    depends_on:
+      db: { condition: service_healthy }
+
+  worker:
+    build: { context: ., dockerfile: docker/node.Dockerfile, args: { APP: worker } }
+    restart: unless-stopped
+    environment:
+      <<: *app-env
+      CHECK_CONCURRENCY: ${CHECK_CONCURRENCY:-50}
+      TRAP_LISTEN_PORT: "1162"
+      TRAP_PUBLISHED_PORT: ${TRAP_PORT:-162}
+    ports:
+      - "${TRAP_PORT:-162}:1162/udp"   # SNMP traps
+    cap_add:
+      - NET_RAW          # Ping monitors
+    # Docker container monitors for containers on THIS host: uncomment both blocks.
+    # The Docker socket gives full control of the host's Docker (":ro" does not limit the API);
+    # prefer a remote Docker API with TLS or a read-only socket proxy for production.
+    volumes:
+      - backups:/backups
+    #   - /var/run/docker.sock:/var/run/docker.sock:ro
+    # group_add:
+    #   - "${DOCKER_GID:-999}"    # getent group docker | cut -d: -f3
+    depends_on:
+      db: { condition: service_healthy }
+
+  web:
+    build: { context: ., dockerfile: docker/web.Dockerfile }
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-8080}:80"
+      - "${WEB_TLS_PORT:-8443}:443"
+    environment:
+      # off (HTTP, e.g. behind your own reverse proxy) | files (your certificate) | self-signed
+      FUDO_TLS: ${FUDO_TLS:-off}
+      FUDO_TLS_HOSTNAME: ${FUDO_TLS_HOSTNAME:-}
+      FUDO_HSTS: ${FUDO_HSTS:-false}
+      # the HTTPS port browsers use, for the redirect from HTTP
+      FUDO_HTTPS_PORT: ${WEB_TLS_PORT:-8443}
+    volumes:
+      # fullchain.pem + privkey.pem; set FUDO_TLS_DIR to a folder of your own for FUDO_TLS=files
+      - ${FUDO_TLS_DIR:-tls}:/etc/fudo/tls
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
+  tls:         # certificate for FUDO_TLS (a generated self-signed one is kept here)
+  backups:     # copy these files off the server too (another disk, NAS or cloud storage)

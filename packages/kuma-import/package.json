@@ -1,0 +1,17 @@
+{
+  "name": "@fudo/kuma-import",
+  "version": "0.40.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^5.0.2"
+  },
+  "license": "AGPL-3.0-or-later"
+}

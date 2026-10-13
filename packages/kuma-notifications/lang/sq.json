@@ -1,0 +1,14 @@
+{
+ "Username": "Emri përdorues",
+ "Password": "Fjalëkalimi",
+ "Token": "Token",
+ "Title": "Titulli",
+ "Priority": "Prioriteti",
+ "Normal": "Normal",
+ "info": "info",
+ "warning": "vërrejtje",
+ "error": "gabim",
+ "critical": "kritike",
+ "Post URL": "Posto URL",
+ "Default": "Paracaktuar"
+}

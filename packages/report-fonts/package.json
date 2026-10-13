@@ -1,0 +1,10 @@
+{
+  "name": "@fudo/report-fonts",
+  "version": "0.40.0",
+  "private": true,
+  "description": "DejaVu Sans (Latin, Greek, Cyrillic) for PDF reports",
+  "license": "AGPL-3.0-or-later AND Bitstream-Vera",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts"
+}

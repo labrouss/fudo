@@ -1,0 +1,32 @@
+{
+  "name": "fudo",
+  "private": true,
+  "version": "0.40.0",
+  "type": "module",
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel --filter \"./apps/*\" dev",
+    "build": "pnpm -r --filter \"./apps/*\" build",
+    "typecheck": "pnpm -r typecheck",
+    "migrate": "pnpm --filter @fudo/db migrate",
+    "test": "pnpm -r --if-present test",
+    "i18n:check": "node scripts/i18n/check.mjs",
+    "i18n:sync": "tsx scripts/i18n/sync-definitions.mts",
+    "themes:check": "tsx scripts/themes/check.mts",
+    "docs:check": "tsx scripts/docs/check.mts",
+    "check:deploy": "sh scripts/check-deploy.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.4",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  },
+  "license": "AGPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<you>/fudo"
+  }
+}

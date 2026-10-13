@@ -1,0 +1,20 @@
+{
+ "Username": "Kasutajanimi",
+ "Password": "Parool",
+ "alertaApiEndpoint": "API otsik",
+ "alertaEnvironment": "Keskkond",
+ "alertaApiKey": "API võti",
+ "alertaAlertState": "Häireseisund",
+ "alertaRecoverState": "Taasta algolek",
+ "Token": "Kaksikautentimise kood",
+ "Server URL": "Serveri URL",
+ "Title": "Pealkiri",
+ "Priority": "Tähtsus",
+ "Normal": "tavaline",
+ "info": "info",
+ "warning": "hoiatus",
+ "error": "viga",
+ "critical": "kriitiline",
+ "Post URL": "Postita URL",
+ "Default": "Vaikimisi"
+}

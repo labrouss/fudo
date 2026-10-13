@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Type-check
+        run: pnpm typecheck
+      - name: Unit tests
+        run: pnpm test
+      - name: Translations
+        run: pnpm i18n:check
+      - name: Themes
+        run: pnpm themes:check
+      - name: Help translations and links
+        run: pnpm docs:check
+      - name: Build
+        run: pnpm build
+      - name: Production install (as in the Docker images)
+        run: pnpm check:deploy
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build images
+        run: |
+          # the same builds as docker-compose.yml
+          docker build -f docker/node.Dockerfile --build-arg APP=api -t fudo-api .
+          docker build -f docker/node.Dockerfile --build-arg APP=worker -t fudo-worker .
+          docker build -f docker/web.Dockerfile -t fudo-web .

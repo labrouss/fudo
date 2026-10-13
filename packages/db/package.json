@@ -1,0 +1,23 @@
+{
+  "name": "@fudo/db",
+  "version": "0.40.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "migrate": "tsx src/migrate-cli.ts"
+  },
+  "dependencies": {
+    "@fudo/shared": "workspace:*",
+    "drizzle-orm": "^0.45.3",
+    "pg": "^8.23.0",
+    "@fudo/engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1"
+  },
+  "license": "AGPL-3.0-or-later"
+}

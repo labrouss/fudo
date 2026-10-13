@@ -1,6 +1,6 @@
 {
   "name": "@fudo/kuma-notifications",
-  "version": "0.40.0",
+  "version": "0.40.1",
   "private": true,
   "description": "Uptime Kuma notification providers (MIT), vendored unmodified with shims for Fudo",
   "license": "AGPL-3.0-or-later AND MIT",

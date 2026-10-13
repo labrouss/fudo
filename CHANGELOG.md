@@ -2,6 +2,17 @@
 
 All notable changes per delivered version. Feature IDs (F-…) in older entries refer to the feature table of the original development README; the current documentation is in [docs/](docs/README.md).
 
+## [0.40.1] - 2026-10-13
+Project website.
+
+### Added
+- **Website** in `site/` for GitHub Pages: what Fudo does, an animation of a core switch failing (one incident instead of a page per check), a tour of the interface with screenshots of a demo data center, the list of checks, and the three install commands. Static HTML with self-hosted IBM Plex fonts: no build step, no third-party requests. Works on phones, with keyboard navigation and reduced motion respected.
+- `.github/workflows/pages.yml` publishes `site/` whenever it changes (enable once under *Settings › Pages › Source: GitHub Actions*). Repository links are worked out from the Pages address.
+
+### Changed
+- README: the overview screenshot shows the current interface.
+- The repository is https://github.com/labrouss/fudo: README, installation guide, the website and *Help › Source code* in the interface point to it.
+
 ## [0.40.0] - 2026-10-12
 Search in the application members picker.
 

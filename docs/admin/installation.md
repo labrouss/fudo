@@ -14,7 +14,7 @@ Fudo runs as four containers with Docker Compose: `db` (PostgreSQL 17 + Timescal
 ## Install
 
 ```bash
-git clone https://github.com/<you>/fudo.git && cd fudo
+git clone https://github.com/labrouss/fudo.git && cd fudo
 cp .env.example .env
 ```
 
@@ -108,7 +108,7 @@ under **System status**.
 
 ```bash
 sudo /docker-data/fudo/scripts/deploy-zip.sh                    # newest fudo-v*.zip in ~hpadmin
-sudo /docker-data/fudo/scripts/deploy-zip.sh ~/fudo-v0.40.0.zip # a given zip
+sudo /docker-data/fudo/scripts/deploy-zip.sh ~/fudo-v0.40.1.zip # a given zip
 sudo /docker-data/fudo/scripts/deploy-zip.sh --rollback         # back to the previous version
 ```
 

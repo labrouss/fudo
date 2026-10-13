@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fudo: monitoring that pages for the root cause</title>
+<meta name="description" content="Self-hosted monitoring and incident management for teams that run shared infrastructure for several business units. One incident per root cause, not fifty alerts.">
+<!-- The GitHub repository the links point to. Empty: worked out from a GitHub Pages address (owner.github.io/repo). -->
+<meta name="fudo:repo" content="https://github.com/labrouss/fudo">
+<meta property="og:title" content="Fudo: monitoring that pages for the root cause">
+<meta property="og:description" content="Self-hosted monitoring and incident management for shared infrastructure. One incident per root cause, not fifty alerts.">
+<meta property="og:image" content="https://labrouss.github.io/fudo/img/social.png">
+<meta property="og:url" content="https://labrouss.github.io/fudo/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preload" href="fonts/ibm-plex-sans-condensed-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* IBM Plex, self-hosted (SIL Open Font License, fonts/LICENSE-IBM-Plex.txt) */
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-sans-cyrillic-400-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-sans-greek-400-normal.woff2) format("woff2");unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-sans-latin-ext-400-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-sans-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-sans-cyrillic-500-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-sans-greek-500-normal.woff2) format("woff2");unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-sans-latin-ext-500-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-sans-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/ibm-plex-sans-cyrillic-600-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/ibm-plex-sans-greek-600-normal.woff2) format("woff2");unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/ibm-plex-sans-latin-ext-600-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/ibm-plex-sans-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"IBM Plex Sans Condensed";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/ibm-plex-sans-condensed-latin-ext-600-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"IBM Plex Sans Condensed";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/ibm-plex-sans-condensed-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"IBM Plex Sans Condensed";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/ibm-plex-sans-condensed-latin-ext-700-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"IBM Plex Sans Condensed";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/ibm-plex-sans-condensed-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root {
+  --paper: #eef0f3; --surface: #ffffff; --ink: #161a21; --ink-2: #4a5263; --muted: #6b7384; --line: #d5d9e0; --line-2: #e4e7ec;
+  --night: #161a22; --night-2: #1e232d; --night-line: #2c3340; --night-ink: #e9ecf1; --night-muted: #9aa3b2;
+  --flame: #d42a3c; --violet: #5a4bd1; --up: #2e8b57; --impacted: #e07b2f; --down: #d64545; --note: #e6f3ec; --note-ink: #1d5c3c;
+  --display: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif; --text: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --wrap: 1180px; --gutter: clamp(16px, 4vw, 40px);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.6 var(--text); -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: var(--violet); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; margin: 0; }
+h2 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); line-height: 1.08; }
+h3 { font-size: 1.3rem; line-height: 1.2; }
+p { margin: 0; }
+code, kbd, .mono { font-family: var(--mono); font-size: 0.92em; }
+.lede { font-size: 1.15rem; color: var(--ink-2); max-width: 62ch; }
+section { padding: clamp(64px, 9vw, 112px) 0; }
+.section-head { display: grid; gap: 14px; margin-bottom: clamp(32px, 4vw, 48px); max-width: 760px; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 22px; border-radius: 10px; font: 600 16px/1 var(--text); text-decoration: none; border: 1px solid transparent; cursor: pointer; }
+.btn svg { width: 20px; height: 20px; flex: none; }
+.btn--light { background: #fff; color: var(--night); }
+.btn--light:hover { background: #f1f2f6; }
+.btn--ghost { color: var(--night-ink); border-color: #3b4352; background: transparent; }
+.btn--ghost:hover { border-color: #5c6577; }
+.btn--ink { background: var(--ink); color: #fff; }
+.btn--ink:hover { background: #2a303b; }
+
+/* top bar */
+.top { position: absolute; inset: 0 0 auto 0; z-index: 5; }
+.top .wrap { display: flex; align-items: center; gap: 28px; height: 76px; }
+.brand { display: flex; align-items: center; gap: 12px; color: var(--night-ink); text-decoration: none; font: 700 1.35rem/1 var(--display); letter-spacing: .01em; }
+.brand img { width: 36px; height: 36px; border-radius: 9px; }
+.top nav { display: flex; gap: 26px; margin-left: auto; align-items: center; }
+.top nav a { color: var(--night-muted); text-decoration: none; font-size: 15px; font-weight: 500; }
+.top nav a:hover { color: var(--night-ink); }
+.top nav .gh { color: var(--night-ink); display: inline-flex; gap: 8px; align-items: center; border: 1px solid #3b4352; padding: 8px 14px; border-radius: 9px; }
+.top nav .gh svg { width: 18px; height: 18px; }
+@media (max-width: 760px) { .top nav a:not(.gh) { display: none; } }
+
+/* hero */
+.hero { background: var(--night); color: var(--night-ink); padding: 140px 0 88px; position: relative; overflow: hidden;
+  background-image: linear-gradient(var(--night-line) 1px, transparent 1px), linear-gradient(90deg, var(--night-line) 1px, transparent 1px);
+  background-size: 28px 28px; background-position: -1px -1px; }
+.hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(22,26,34,.55), var(--night) 92%); pointer-events: none; }
+.hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+.hero h1 { font-size: clamp(2.5rem, 5.2vw, 4.25rem); line-height: 1.02; font-weight: 600; max-width: 14ch; }
+.hero .lede { color: var(--night-muted); margin-top: 22px; font-size: 1.12rem; }
+.hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.hero .facts { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--night-muted); font-size: 14px; list-style: none; padding: 0; }
+.hero .facts li { display: flex; align-items: center; gap: 8px; }
+.hero .facts li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--up); }
+@media (max-width: 960px) { .hero .wrap { grid-template-columns: 1fr; } .hero h1 { max-width: 18ch; } .hero { padding-top: 116px; } }
+
+/* the cascade */
+.cascade { background: rgba(30,35,45,.92); border: 1px solid var(--night-line); border-radius: 16px; padding: 18px 18px 16px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.6); }
+.cascade-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13.5px; color: var(--night-muted); margin-bottom: 6px; }
+.cascade-head .replay { background: none; border: 1px solid var(--night-line); color: var(--night-ink); border-radius: 8px; height: 30px; padding: 0 10px; font: 500 13px/1 var(--text); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.cascade-head .replay:hover { border-color: #4a5364; }
+.cascade-head .replay svg { width: 14px; height: 14px; }
+.cascade svg.map { width: 100%; height: auto; display: block; }
+.map .node rect.box { fill: #232935; stroke: #343c4a; }
+.map .node rect.bar { fill: var(--up); transition: fill .45s ease; }
+.map .node circle { fill: var(--up); transition: fill .45s ease; }
+.map .node text { fill: var(--night-ink); font: 600 13px var(--text); }
+.map .node text.sub { fill: var(--night-muted); font: 400 11px var(--text); }
+.map .edge { fill: none; stroke: #47505f; stroke-width: 1.4; transition: stroke .45s ease, stroke-width .45s ease; }
+.map .is-down rect.bar, .map .is-down circle { fill: var(--down); }
+.map .is-impacted rect.bar, .map .is-impacted circle { fill: var(--impacted); }
+.map .edge.is-hot { stroke: var(--impacted); stroke-width: 2; }
+.map .is-down circle { animation: pulse 1.4s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: .35; } 100% { opacity: 1; } }
+.tally { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: stretch; margin-top: 10px; }
+.tally .count { border: 1px solid var(--night-line); border-radius: 12px; padding: 12px 16px; min-width: 128px; }
+.tally .count b { display: block; font: 600 2rem/1 var(--display); font-variant-numeric: tabular-nums; }
+.tally .count span { font-size: 12.5px; color: var(--night-muted); }
+.inc { border-radius: 12px; padding: 12px 16px; background: #2a2224; border: 1px solid #5a2f34; opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; }
+.inc.is-on { opacity: 1; transform: none; }
+.inc .key { font: 500 12.5px var(--mono); color: #f4a3a3; }
+.inc strong { display: block; font-size: 15px; margin: 2px 0 4px; }
+.inc p { font-size: 13px; color: #c9b9bb; line-height: 1.45; }
+@media (max-width: 520px) { .tally { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .map * , .inc { transition: none !important; animation: none !important; } }
+
+/* screens */
+.screens { background: var(--surface); border-bottom: 1px solid var(--line-2); }
+.tabs { display: flex; gap: 4px; overflow-x: auto; border-bottom: 1px solid var(--line); scrollbar-width: thin; margin-bottom: 26px; }
+.tab { flex: none; border: 0; background: none; font: 500 15px var(--text); color: var(--muted); padding: 12px 14px 11px; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; border-radius: 8px 8px 0 0; }
+.tab:hover { color: var(--ink); background: var(--paper); }
+.tab[aria-selected="true"] { color: var(--ink); font-weight: 600; border-bottom-color: var(--flame); }
+.shot { display: grid; gap: 22px; }
+.shot[hidden] { display: none; }
+.shot .caption { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px 48px; align-items: start; max-width: 1040px; }
+.shot .caption h3 { grid-column: 1; margin-bottom: 4px; }
+.shot .caption p { grid-column: 1; color: var(--ink-2); }
+.shot .caption ul { grid-column: 2; grid-row: 1 / span 2; margin: 2px 0 0; padding-left: 18px; color: var(--ink-2); font-size: 15.5px; }
+.shot .caption li + li { margin-top: 6px; }
+.shot figure { margin: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 24px 60px -28px rgba(22, 26, 33, .35); background: var(--paper); }
+.shot figure img { width: 100%; height: auto; aspect-ratio: 16 / 10; }
+@media (max-width: 800px) { .shot .caption { grid-template-columns: 1fr; } .shot .caption ul { grid-column: 1; grid-row: auto; } }
+
+/* features */
+.features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px 48px; }
+.feature { border-top: 2px solid var(--ink); padding-top: 18px; }
+.feature svg { width: 26px; height: 26px; color: var(--flame); margin-bottom: 14px; }
+.feature h3 { margin-bottom: 8px; }
+.feature p { color: var(--ink-2); font-size: 16px; }
+@media (max-width: 900px) { .features { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .features { grid-template-columns: 1fr; } }
+
+/* memory */
+.memory { background: var(--night); color: var(--night-ink); }
+.memory .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); align-items: center; }
+.memory .lede { color: var(--night-muted); margin-top: 16px; }
+.memory .points { margin: 24px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; color: var(--night-ink); }
+.memory .points li { padding-left: 26px; position: relative; }
+.memory .points li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 12px; height: 2px; background: var(--flame); }
+.recall { background: #fff; color: var(--ink); border-radius: 14px; padding: 22px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.7); }
+.recall h3 { font-size: 1.15rem; margin-bottom: 12px; }
+.recall .row { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; font-size: 14px; }
+.recall .row a { font-family: var(--mono); font-size: 13.5px; }
+.recall .chip { background: #e9edf6; color: #2f3d63; border-radius: 6px; padding: 2px 8px; font-size: 13px; }
+.recall .title { margin: 8px 0 2px; font-weight: 600; }
+.recall .when { color: var(--muted); font-size: 14px; }
+.recall ol { margin: 12px 0; padding-left: 20px; font-size: 14.5px; color: var(--ink-2); }
+.recall .resolution { background: var(--note); color: var(--note-ink); border-radius: 8px; padding: 12px 14px; font-size: 14.5px; line-height: 1.5; }
+.recall .resolution b { font-weight: 600; }
+.recall .quote { margin-top: 16px; border-top: 1px solid var(--line-2); padding-top: 14px; font-size: 13.5px; color: var(--muted); }
+.recall .quote span { display: block; font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); margin-top: 4px; white-space: pre-wrap; }
+@media (max-width: 900px) { .memory .wrap { grid-template-columns: 1fr; } }
+
+/* checks */
+.checks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; }
+.checks > div { padding: 22px 24px 24px; border-right: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+.checks > div:nth-child(3n) { border-right: 0; }
+.checks > div:nth-last-child(-n + 3) { border-bottom: 0; }
+.checks h3 { font-size: 1.05rem; margin-bottom: 10px; }
+.checks ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: 15.5px; color: var(--ink-2); }
+.aside { margin-top: 22px; color: var(--ink-2); max-width: 70ch; }
+@media (max-width: 900px) { .checks { grid-template-columns: 1fr 1fr; } .checks > div:nth-child(3n) { border-right: 1px solid var(--line-2); } .checks > div:nth-child(2n) { border-right: 0; } .checks > div:nth-last-child(-n + 3) { border-bottom: 1px solid var(--line-2); } .checks > div:nth-last-child(-n + 2) { border-bottom: 0; } }
+@media (max-width: 560px) { .checks { grid-template-columns: 1fr; } .checks > div { border-right: 0 !important; border-bottom: 1px solid var(--line-2) !important; } .checks > div:last-child { border-bottom: 0 !important; } }
+
+/* more */
+.more { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); }
+.more dl { margin: 0; display: grid; gap: 18px; }
+.more dt { font-weight: 600; }
+.more dd { margin: 2px 0 0; color: var(--ink-2); font-size: 16px; }
+.langs { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; }
+.langs li { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; font-size: 15px; }
+@media (max-width: 800px) { .more { grid-template-columns: 1fr; } }
+
+/* install */
+.install { background: var(--surface); border-top: 1px solid var(--line-2); }
+.install .wrap { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 64px); align-items: start; }
+.term { background: var(--night); color: var(--night-ink); border-radius: 14px; overflow: hidden; border: 1px solid #262c37; }
+.term-head { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px 10px 16px; border-bottom: 1px solid var(--night-line); color: var(--night-muted); font-size: 13px; }
+.term-head button { background: none; border: 1px solid var(--night-line); color: var(--night-ink); border-radius: 7px; height: 28px; padding: 0 10px; font: 500 13px var(--text); cursor: pointer; }
+.term pre { margin: 0; padding: 18px 20px 20px; overflow-x: auto; font: 14.5px/1.75 var(--mono); }
+.term .c { color: #7e8899; }
+.term .p { color: #7e8899; user-select: none; }
+.install ul.links { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 8px; }
+.install .needs { margin-top: 18px; color: var(--ink-2); font-size: 16px; }
+@media (max-width: 900px) { .install .wrap { grid-template-columns: 1fr; } }
+
+/* footer */
+footer { background: var(--night); color: var(--night-muted); padding: 48px 0; font-size: 14.5px; }
+footer .wrap { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; }
+footer .brand { margin-bottom: 14px; }
+footer p + p { margin-top: 10px; }
+footer a { color: var(--night-ink); }
+footer ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; align-content: start; }
+@media (max-width: 700px) { footer .wrap { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/fudo-mark.png" alt="" width="36" height="36">Fudo</a>
+    <nav aria-label="Main">
+      <a href="#screens">Screens</a>
+      <a href="#features">Features</a>
+      <a href="#install">Install</a>
+      <a data-repo-path="/blob/main/docs/README.md" href="https://github.com/labrouss/fudo/blob/main/docs/README.md">Docs</a>
+      <a class="gh" data-repo-path="" href="https://github.com/labrouss/fudo"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap">
+    <div>
+      <h1 id="hero-title">When a core switch fails, you get one incident, not fifty alerts.</h1>
+      <p class="lede">Fudo is self-hosted monitoring and incident management for teams that run shared infrastructure for several business units. It knows what depends on what, so it opens one incident for the cause and links everything it takes down.</p>
+      <div class="actions">
+        <a class="btn btn--light" data-repo-path="" href="https://github.com/labrouss/fudo"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>Get Fudo on GitHub</a>
+        <a class="btn btn--ghost" href="#install">Install with Docker</a>
+      </div>
+      <ul class="facts">
+        <li>Free software, AGPL-3.0</li>
+        <li>Runs on your servers</li>
+        <li>13 languages</li>
+      </ul>
+    </div>
+
+    <div class="cascade" role="img" aria-label="Animation: core-sw-02 goes down; the ESX cluster and SQL server behind it and five applications in three tenants turn impacted; 12 checks fail, and Fudo opens a single incident for core-sw-02 that links the five impacted applications.">
+      <div class="cascade-head"><span id="clock">02:14 · all systems up</span><button class="replay" type="button" id="replay" aria-label="Play the outage again"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2.5 8a5.5 5.5 0 1 0 1.6-3.9M2.5 2.5v3h3"/></svg>Replay</button></div>
+      <svg class="map" viewBox="0 0 560 310" aria-hidden="true">
+        <g id="edges"></g>
+        <g id="nodes"></g>
+      </svg>
+      <div class="tally">
+        <div class="count"><b id="failing">0</b><span>checks failing</span></div>
+        <div class="inc" id="inc">
+          <span class="key">INC-0013 · paged once</span>
+          <strong>core-sw-02 is down</strong>
+          <p>Root cause of 5 impacted incidents in Finance, Retail and HR. Last time: line card 3 reset; uplinks moved to line card 4.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="screens" id="screens" aria-labelledby="screens-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="screens-title">A look inside</h2>
+      <p class="lede">Every screen below is the real application, with a demo data center: three tenants, a shared ESX cluster and a core switch that has just failed.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Screens" id="tabs">
+      <button class="tab" role="tab" id="t-incident" aria-controls="p-incident" aria-selected="true">Root cause</button>
+      <button class="tab" role="tab" id="t-topology" aria-controls="p-topology" aria-selected="false" tabindex="-1">Topology</button>
+      <button class="tab" role="tab" id="t-tenant" aria-controls="p-tenant" aria-selected="false" tabindex="-1">Tenants</button>
+      <button class="tab" role="tab" id="t-app" aria-controls="p-app" aria-selected="false" tabindex="-1">Applications</button>
+      <button class="tab" role="tab" id="t-traffic" aria-controls="p-traffic" aria-selected="false" tabindex="-1">Interface traffic</button>
+      <button class="tab" role="tab" id="t-discovery" aria-controls="p-discovery" aria-selected="false" tabindex="-1">Discovery</button>
+      <button class="tab" role="tab" id="t-status" aria-controls="p-status" aria-selected="false" tabindex="-1">Status pages</button>
+      <button class="tab" role="tab" id="t-dark" aria-controls="p-dark" aria-selected="false" tabindex="-1">Dark theme</button>
+    </div>
+
+    <div class="shot" role="tabpanel" id="p-incident" aria-labelledby="t-incident">
+      <div class="caption">
+        <h3>The switch is the incident</h3>
+        <p>The applications it took down in three tenants are linked to it, so one person handles the cause while the business units see what is going on.</p>
+        <ul><li>Similar past incidents with the note that resolved them</li><li>Acknowledge, snooze, post-incident report</li><li>Notifications sent once, to the right channel</li></ul>
+      </div>
+      <figure><img src="img/incident.webp" width="2160" height="1350" alt="Incident INC-0013, core-sw-02 is down: root cause of five impacted incidents in Finance, Retail and HR, a timeline, and a similar past incident with its resolution."></figure>
+    </div>
+    <div class="shot" role="tabpanel" id="p-topology" aria-labelledby="t-topology" hidden>
+      <div class="caption">
+        <h3>What depends on what</h3>
+        <p>Applications on the left, the infrastructure they need on the right. When something fails, the impact is traced through the map.</p>
+        <ul><li>Hover a node to trace its dependencies</li><li>“What if this fails?” predicts the impact before maintenance</li></ul>
+      </div>
+      <figure><img src="img/topology.webp" width="2160" height="1350" loading="lazy" alt="Topology map: applications on the left, the database, cluster, firewall and switches they depend on to the right, with the impact of core-sw-02 traced in orange."></figure>
+    </div>
+    <div class="shot" role="tabpanel" id="p-tenant" aria-labelledby="t-tenant" hidden>
+      <div class="caption">
+        <h3>Each business unit, its own view</h3>
+        <p>Tenants have their own applications, channels, reports and status pages. Shared infrastructure is managed once and shows up as the cause in every tenant it affects.</p>
+        <ul><li>Roles per tenant, infrastructure admins for the shared part</li><li>Mandatory two-factor sign-in</li></ul>
+      </div>
+      <figure><img src="img/overview-finance.webp" width="2160" height="1350" loading="lazy" alt="Overview of the Finance tenant: two open incidents caused by INC-0013, mean time to repair, SLA, and its applications with 30 days of availability."></figure>
+    </div>
+    <div class="shot" role="tabpanel" id="p-app" aria-labelledby="t-app" hidden>
+      <div class="caption">
+        <h3>Applications and their SLA</h3>
+        <p>An application groups the checks that tell whether it works, plus the infrastructure it needs. Availability is measured against its target, day by day.</p>
+        <ul><li>All, any or n-of-m members required</li><li>Planned maintenance does not count against the SLA</li><li>PDF and CSV reports, emailed on a schedule</li></ul>
+      </div>
+      <figure><img src="img/application.webp" width="2160" height="1350" loading="lazy" alt="ERP Production application: impacted because core-sw-02 is down, 30-day availability against a 99.9% target, notification channels and owner."></figure>
+    </div>
+    <div class="shot" role="tabpanel" id="p-traffic" aria-labelledby="t-traffic" hidden>
+      <div class="caption">
+        <h3>Switch ports, over SNMP</h3>
+        <p>Link state, traffic in and out, utilisation and errors per minute for any port of a switch, router or firewall.</p>
+        <ul><li>Find the interface from a list, or add several at once</li><li>Degraded from 80 % utilisation, or your own limit</li><li>SNMP traps with automatic or manual clearing</li></ul>
+      </div>
+      <figure><img src="img/monitor-traffic.webp" width="2160" height="1350" loading="lazy" alt="Network interface monitor for core-sw-01 Te1/1/1: 3.19 Gbit/s in and 1.1 Gbit/s out on a 10 Gbit/s link, with 24 hours of traffic and the 80 % utilisation line."></figure>
+    </div>
+    <div class="shot" role="tabpanel" id="p-discovery" aria-labelledby="t-discovery" hidden>
+      <div class="caption">
+        <h3>It finds your devices</h3>
+        <p>Scan a subnet, read vCenter, the neighbour tables of your switches or HPE OneView. Review what was found, then create assets and monitors in one go.</p>
+        <ul><li>Recognises iLO, ESXi, vCenter, switches, storage, Windows and Linux</li><li>Known devices are hidden</li><li>Dependencies come along</li></ul>
+      </div>
+      <figure><img src="img/discovery.webp" width="2160" height="1350" loading="lazy" alt="Discovery results for the DC1 management network: an HPE iLO, an ESXi host, a vCenter, a Cisco switch, Windows and Linux servers and an HPE Primera, each with a suggested monitor template."></figure>
+    </div>
+    <div class="shot" role="tabpanel" id="p-status" aria-labelledby="t-status" hidden>
+      <div class="caption">
+        <h3>Status pages</h3>
+        <p>Public or internal status pages per tenant, with current incidents, planned maintenance and 90 days of history. They refresh every minute.</p>
+      </div>
+      <figure><img src="img/status-page.webp" width="2160" height="1350" loading="lazy" alt="Public status page Acme Retail status, with current incidents for the webshop and store checkouts and 90 days of availability."></figure>
+    </div>
+    <div class="shot" role="tabpanel" id="p-dark" aria-labelledby="t-dark" hidden>
+      <div class="caption">
+        <h3>Light, dark or yours</h3>
+        <p>Light, dark and Monokai themes, or follow the operating system. Add your own colours by dropping a file into a folder.</p>
+      </div>
+      <figure><img src="img/incident-dark.webp" width="2160" height="1350" loading="lazy" alt="The same incident in the dark theme."></figure>
+    </div>
+  </div>
+</section>
+
+<section id="features" aria-labelledby="features-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="features-title">Made for the people who run the data center</h2>
+      <p class="lede">Fudo started where uptime checkers stop: shared infrastructure, many owners, and the question every on-call engineer asks first, “what actually broke?”</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="18" cy="12" r="3"/><circle cx="5" cy="5" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="5" cy="19" r="2"/><path d="M7 5c5 0 5 7 8 7M7 12h8M7 19c5 0 5-7 8-7"/></svg>
+        <h3>One alert per root cause</h3>
+        <p>Model applications, servers, clusters, storage and switches. When a switch fails you are paged for the switch, with every impacted application linked to it.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M6 14V9m6 5V9m6 5V9"/><rect x="3.5" y="4" width="5" height="5" rx="1"/><rect x="9.5" y="4" width="5" height="5" rx="1"/><rect x="15.5" y="4" width="5" height="5" rx="1"/></svg>
+        <h3>Shared infrastructure, many tenants</h3>
+        <p>Business units get their own applications, channels and reports. The infrastructure they share is managed once, in a global scope, by the team that runs it.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12.5h5"/></svg>
+        <h3>Incidents that remember</h3>
+        <p>Resolution notes come back on similar incidents and are quoted in their alerts, so the fix from last spring is on screen before anyone starts digging.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M8 11h6M11 8v6"/></svg>
+        <h3>Discovery and templates</h3>
+        <p>Find devices on a subnet, in vCenter, through LLDP and CDP or in HPE OneView. Templates add the right checks for an iLO, an ESXi host or a storage array.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg>
+        <h3>Notifications where you are</h3>
+        <p>Email, Microsoft Teams, Slack, webhooks and more than 100 other services, routed per tenant, application and severity. On-call rotations page people in their own order.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 3.5h10l4 4v13H5z"/><path d="M15 3.5v4h4M8.5 17v-3m3.5 3v-6m3.5 6v-4"/></svg>
+        <h3>Availability and SLA reports</h3>
+        <p>Around the clock or business hours only, as PDF or CSV, emailed on a schedule. Planned maintenance is kept out of the numbers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="memory" aria-labelledby="memory-title">
+  <div class="wrap">
+    <div>
+      <h2 id="memory-title">The fix from last time, before anyone starts digging</h2>
+      <p class="lede">Every note added while working an incident is kept: what was tried, and what fixed it. When something similar happens, Fudo finds it by the item, the root cause, the tags and the words used.</p>
+      <ul class="points">
+        <li>Resolution notes appear on the new incident and in its alert</li>
+        <li>Post-incident reports as PDF, with the timeline</li>
+        <li>Acknowledge from the alert itself, without signing in</li>
+      </ul>
+    </div>
+    <div class="recall">
+      <h3>Similar past incidents</h3>
+      <div class="row"><a href="#screens">INC-0006</a><span class="chip">same item</span><span class="chip">2 shared tags</span><span class="chip">similar description</span></div>
+      <p class="title">core-sw-02 is down</p>
+      <p class="when">16 days ago · resolved in 24 min</p>
+      <ol><li>Console: line card 3 reset at 02:14, uplink Te1/1/2 to the ESX cluster is flapping. Moved the cluster uplinks to line card 4.</li></ol>
+      <p class="resolution"><b>Resolution:</b> Line card 3 in core-sw-02 reset itself and dropped the ESX-Cluster-01 uplinks. Moved the uplinks to line card 4 and opened a hardware case with the vendor; the card was replaced the next morning.</p>
+      <p class="quote">Quoted in the alert to the on-call channel:<span>INC-0013 core-sw-02 is down
+Last time this was resolved by: Line card 3 in core-sw-02 reset itself…</span></p>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="checks-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="checks-title">Checks for everything in the rack</h2>
+      <p class="lede">From a web page to the inlet temperature of a blade. Each check can belong to an asset, so its failure is understood in context.</p>
+    </div>
+    <div class="checks">
+      <div><h3>Web</h3><ul><li>HTTP(S), with keyword or JSON value</li><li>TLS certificate expiry</li><li>Domain expiry</li><li>DNS records</li></ul></div>
+      <div><h3>Network</h3><ul><li>Ping and TCP port</li><li>SNMP values and counters</li><li>Network interface traffic</li><li>SNMP traps</li><li>NTP</li></ul></div>
+      <div><h3>Systems</h3><ul><li>SSH command</li><li>Docker container</li><li>LDAP and Active Directory</li><li>SMTP</li></ul></div>
+      <div><h3>Infrastructure</h3><ul><li>vCenter virtual machines</li><li>HPE iLO and Redfish health</li><li>Inlet and room temperature</li></ul></div>
+      <div><h3>Databases</h3><ul><li>Microsoft SQL Server</li><li>PostgreSQL</li><li>MySQL and MariaDB</li><li>MongoDB and Redis</li></ul></div>
+      <div><h3>Passive</h3><ul><li>Push heartbeats for jobs and backups</li><li>Traps from switches, UPS and storage</li></ul></div>
+    </div>
+    <p class="aside">Passwords and SNMP communities live in shared credentials, encrypted, and are used by as many checks as need them. Coming from Uptime Kuma? Fudo imports its backup or database, notifications included.</p>
+  </div>
+</section>
+
+<section aria-labelledby="ops-title" style="padding-top: 0">
+  <div class="wrap more">
+    <div>
+      <h2 id="ops-title">Everything in the browser</h2>
+      <p class="lede" style="margin-top: 14px">No configuration files to edit after the first start: settings, users, channels and backups are all managed in the interface.</p>
+      <h3 style="margin-top: 36px">In your language</h3>
+      <ul class="langs" aria-label="Interface languages">
+        <li lang="en">English</li><li lang="de">Deutsch</li><li lang="fr">Français</li><li lang="es">Español</li><li lang="it">Italiano</li><li lang="nl">Nederlands</li><li lang="pt-BR">Português (Brasil)</li><li lang="el">Ελληνικά</li><li lang="pl">Polski</li><li lang="ro">Română</li><li lang="tr">Türkçe</li><li lang="bg">Български</li><li lang="ar" dir="rtl">العربية</li>
+      </ul>
+    </div>
+    <dl>
+      <div><dt>Setup wizard and two-factor sign-in</dt><dd>Invitations by email, sign-in with an authenticator app for everyone, recovery codes.</dd></div>
+      <div><dt>Configuration as code</dt><dd>Export a scope as YAML, keep it in git, import it back with a preview of every change.</dd></div>
+      <div><dt>Maintenance windows</dt><dd>One-off or recurring, for assets, monitors or applications. Nobody is paged and the SLA is not affected.</dd></div>
+      <div><dt>Encrypted backups</dt><dd>On demand or on a schedule, restored from the browser on the same or a new server.</dd></div>
+      <div><dt>Audit log and API</dt><dd>Every sign-in and change is recorded. A documented REST API with tokens per tenant.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="install" id="install" aria-labelledby="install-title">
+  <div class="wrap">
+    <div>
+      <h2 id="install-title">Running in three commands</h2>
+      <p class="lede" style="margin-top: 14px">Fudo runs with Docker Compose: the application, its worker and PostgreSQL with TimescaleDB. Then open port 8080 and follow the setup wizard.</p>
+      <p class="needs">You need a Linux server with Docker and the Compose plugin, and network access to what you want to monitor.</p>
+      <ul class="links">
+        <li><a data-repo-path="/blob/main/docs/admin/installation.md" href="https://github.com/labrouss/fudo/blob/main/docs/admin/installation.md">Installation guide</a></li>
+        <li><a data-repo-path="/blob/main/docs/admin/upgrading-and-backup.md" href="https://github.com/labrouss/fudo/blob/main/docs/admin/upgrading-and-backup.md">Upgrading and backup</a></li>
+        <li><a data-repo-path="/blob/main/docs/guide/getting-started.md" href="https://github.com/labrouss/fudo/blob/main/docs/guide/getting-started.md">Getting started</a></li>
+        <li><a data-repo-path="/blob/main/CHANGELOG.md" href="https://github.com/labrouss/fudo/blob/main/CHANGELOG.md">What’s new</a></li>
+      </ul>
+    </div>
+    <div class="term">
+      <div class="term-head"><span>Terminal</span><button type="button" id="copy">Copy</button></div>
+<pre id="cmds"><span class="p">$ </span>git clone <span data-repo-text>https://github.com/labrouss/fudo</span>.git &amp;&amp; cd fudo
+<span class="p">$ </span>cp .env.example .env
+<span class="c"># set POSTGRES_PASSWORD, APP_SECRET and PUBLIC_URL</span>
+<span class="p">$ </span>docker compose up -d --build</pre>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#top"><img src="img/fudo-mark.png" alt="" width="36" height="36">Fudo</a>
+      <p>Named after Fudō Myō-ō, the Immovable One, who holds a sword that cuts through illusion and a rope that binds chaos.</p>
+      <p>Free software under the GNU Affero General Public License v3.0 or later. Notification providers from Uptime Kuma (MIT).</p>
+    </div>
+    <ul>
+      <li><a data-repo-path="" href="https://github.com/labrouss/fudo">Source code</a></li>
+      <li><a data-repo-path="/blob/main/docs/README.md" href="https://github.com/labrouss/fudo/blob/main/docs/README.md">Documentation</a></li>
+      <li><a data-repo-path="/blob/main/CHANGELOG.md" href="https://github.com/labrouss/fudo/blob/main/CHANGELOG.md">Changelog</a></li>
+      <li><a data-repo-path="/issues" href="https://github.com/labrouss/fudo/issues">Report a problem</a></li>
+      <li><a data-repo-path="/blob/main/CONTRIBUTING.md" href="https://github.com/labrouss/fudo/blob/main/CONTRIBUTING.md">Contributing</a></li>
+      <li><a data-repo-path="/blob/main/LICENSE" href="https://github.com/labrouss/fudo/blob/main/LICENSE">License</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+// ---- repository links: from <meta name="fudo:repo">, else from the GitHub Pages address (owner.github.io/repo)
+(function () {
+  var repo = (document.querySelector('meta[name="fudo:repo"]') || {}).content || "";
+  var m = location.hostname.match(/^([a-z0-9-]+)\.github\.io$/i);
+  if (!repo && m) repo = "https://github.com/" + m[1] + "/" + (location.pathname.split("/")[1] || m[1] + ".github.io");
+  if (!repo) repo = "https://github.com/";
+  repo = repo.replace(/\/+$/, "");
+  document.querySelectorAll("[data-repo-path]").forEach(function (a) { a.href = repo + a.getAttribute("data-repo-path"); });
+  document.querySelectorAll("[data-repo-text]").forEach(function (s) { if (repo !== "https://github.com") s.textContent = repo; });
+})();
+
+// ---- screens tabs (arrow keys, Home, End)
+(function () {
+  var tabs = Array.prototype.slice.call(document.querySelectorAll("#tabs .tab"));
+  function show(tab, focus) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) tab.focus();
+    tab.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { show(t); });
+    t.addEventListener("keydown", function (e) {
+      var n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+      if (n === undefined) return;
+      e.preventDefault(); show(tabs[(n + tabs.length) % tabs.length], true);
+    });
+  });
+})();
+
+// ---- copy the install commands
+document.getElementById("copy").addEventListener("click", function () {
+  var text = document.getElementById("cmds").innerText.split("\n").filter(function (l) { return l.indexOf("#") !== 0; }).map(function (l) { return l.replace(/^\$ /, ""); }).join("\n");
+  var b = this;
+  (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { b.textContent = "Copied"; }, function () { b.textContent = "Select and copy"; });
+  setTimeout(function () { b.textContent = "Copy"; }, 2000);
+});
+
+// ---- the outage in the hero
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  var H = 44, W, svg = document.querySelector(".cascade svg.map");
+  // wide: applications left, switch right; narrow (phones): switch on top, applications below
+  var LAYOUTS = {
+    wide: { w: 162, box: "0 0 560 310", dir: "h", pos: { erp: [0, 6], pay: [0, 70], shop: [0, 134], pos: [0, 198], intra: [0, 262], esx: [205, 86], sql: [205, 190], sw: [398, 138] } },
+    narrow: { w: 160, box: "0 0 340 404", dir: "v", pos: { sw: [90, 0], esx: [0, 110], sql: [180, 110], erp: [0, 220], pay: [180, 220], shop: [0, 290], pos: [180, 290], intra: [90, 360] } },
+  };
+  var nodes = [
+    { id: "erp", name: "ERP Production", sub: "Finance" }, { id: "pay", name: "Payroll", sub: "Finance" },
+    { id: "shop", name: "Webshop", sub: "Retail" }, { id: "pos", name: "Point of sale", sub: "Retail" }, { id: "intra", name: "Intranet", sub: "HR" },
+    { id: "esx", name: "ESX-Cluster-01", sub: "3 hosts" }, { id: "sql", name: "sql-prod-02", sub: "SQL Server" }, { id: "sw", name: "core-sw-02", sub: "Core switch" },
+  ];
+  var appChecks = { erp: 2, pay: 1, shop: 2, pos: 1, intra: 1 };
+  var edges = [["erp", "esx"], ["erp", "sql"], ["pay", "esx"], ["pay", "sql"], ["shop", "esx"], ["pos", "esx"], ["pos", "sql"], ["intra", "esx"], ["esx", "sw"], ["sql", "sw"]];
+  var byId = {}; nodes.forEach(function (n) { byId[n.id] = n; });
+  var gE = document.getElementById("edges"), gN = document.getElementById("nodes");
+  var el = function (tag, attrs, parent) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+  var layoutName = null;
+  function build() {
+    var name = svg.getBoundingClientRect().width < 470 ? "narrow" : "wide";
+    if (name === layoutName) return false;
+    layoutName = name; var L = LAYOUTS[name]; W = L.w;
+    svg.setAttribute("viewBox", L.box); gE.textContent = ""; gN.textContent = "";
+    edges.forEach(function (e) {
+      var a = L.pos[e[0]], b = L.pos[e[1]], d;
+      if (L.dir === "h") { var x1 = a[0] + W, y1 = a[1] + H / 2, x2 = b[0], y2 = b[1] + H / 2, mx = (x1 + x2) / 2; d = "M" + x1 + "," + y1 + " C" + mx + "," + y1 + " " + mx + "," + y2 + " " + x2 + "," + y2; }
+      else { var X1 = a[0] + W / 2, Y1 = a[1], X2 = b[0] + W / 2, Y2 = b[1] + H, my = (Y1 + Y2) / 2; d = "M" + X1 + "," + Y1 + " C" + X1 + "," + my + " " + X2 + "," + my + " " + X2 + "," + Y2; }
+      e.path = el("path", { d: d, class: "edge" }, gE);
+    });
+    nodes.forEach(function (n) {
+      var g = el("g", { class: "node", transform: "translate(" + L.pos[n.id][0] + "," + L.pos[n.id][1] + ")" }, gN);
+      el("rect", { class: "box", width: W, height: H, rx: 7 }, g);
+      el("rect", { class: "bar", width: 4, height: H, rx: 2 }, g);
+      el("circle", { cx: W - 12, cy: 12, r: 4 }, g);
+      el("text", { x: 14, y: 19 }, g).textContent = n.name;
+      n.subEl = el("text", { x: 14, y: 34, class: "sub" }, g); n.subEl.textContent = n.sub;
+      n.g = g;
+    });
+    return true;
+  }
+  build();
+  var clock = document.getElementById("clock"), failing = document.getElementById("failing"), inc = document.getElementById("inc");
+  var timers = [];
+  function set(id, state, sub) { var n = byId[id]; n.g.setAttribute("class", "node" + (state ? " is-" + state : "")); n.subEl.textContent = sub || n.sub; }
+  function count(to) { failing.textContent = to; }
+  function reset() {
+    timers.forEach(clearTimeout); timers = [];
+    nodes.forEach(function (n) { set(n.id, ""); });
+    edges.forEach(function (e) { e.path.setAttribute("class", "edge"); });
+    count(0); inc.classList.remove("is-on"); clock.textContent = "02:14 · all systems up";
+  }
+  function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+  function play(instant) {
+    played = true;
+    reset();
+    var t = instant ? function (ms, fn) { fn(); } : at;
+    t(900, function () { set("sw", "down", "Down · no ping reply"); count(1); clock.textContent = "02:14:07 · core-sw-02 stops answering"; });
+    t(1700, function () {
+      set("esx", "impacted", "Impacted by core-sw-02"); set("sql", "impacted", "Impacted by core-sw-02"); count(5);
+      edges.forEach(function (e) { if (e[1] === "sw") e.path.setAttribute("class", "edge is-hot"); });
+    });
+    var n = 5;
+    ["erp", "pay", "shop", "pos", "intra"].forEach(function (id, i) {
+      t(2500 + i * 180, function () {
+        set(id, "impacted", "Impacted · " + byId[id].sub); n += appChecks[id]; count(n);
+        edges.forEach(function (e) { if (e[0] === id) e.path.setAttribute("class", "edge is-hot"); });
+      });
+    });
+    t(3800, function () { inc.classList.add("is-on"); clock.textContent = "02:14:29 · one incident, one page"; });
+  }
+  var played = false;
+  window.addEventListener("resize", function () { if (build() && played) play(true); });
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.getElementById("replay").addEventListener("click", function () { play(reduce); });
+  if (reduce) play(true);
+  else if ("IntersectionObserver" in window) {
+    var seen = false;
+    new IntersectionObserver(function (es, o) { if (!seen && es[0].isIntersecting) { seen = true; o.disconnect(); play(false); } }, { threshold: 0.4 }).observe(document.querySelector(".cascade"));
+  } else play(false);
+})();
+</script>
+</body>
+</html>

@@ -36,7 +36,7 @@ infrastructure for several business units.
 ## Quick start
 
 ```bash
-git clone https://github.com/<you>/fudo.git && cd fudo
+git clone https://github.com/labrouss/fudo.git && cd fudo
 cp .env.example .env    # set POSTGRES_PASSWORD, APP_SECRET (openssl rand -base64 48) and PUBLIC_URL
 docker compose up -d --build
 ```
@@ -45,6 +45,7 @@ Open `http://<host>:8080` and follow the setup wizard. Details: [Installation](d
 
 ## Documentation
 
+- **Website**: [`site/`](site/README.md), published on GitHub Pages by `.github/workflows/pages.yml`.
 - **User guide**: [Getting started](docs/guide/getting-started.md) · [Concepts](docs/guide/concepts.md) ·
   [Monitors](docs/guide/monitors.md) · [Incidents](docs/guide/incidents.md) ·
   [Notifications](docs/guide/notifications.md) · [more…](docs/README.md). Also built into Fudo under **Help**.

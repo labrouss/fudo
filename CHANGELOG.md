@@ -12,6 +12,7 @@ Project website.
 ### Changed
 - README: the overview screenshot shows the current interface.
 - The repository is https://github.com/labrouss/fudo: README, installation guide, the website and *Help › Source code* in the interface point to it.
+- CI and website workflows: pnpm version taken only from `packageManager` in package.json (fixes "Multiple versions of pnpm specified"); actions updated to their Node 24 releases (checkout v6, setup-node v6, pnpm/action-setup v5, configure-pages v6, upload-pages-artifact v5, deploy-pages v5); runners pinned to `ubuntu-24.04`.
 
 ## [0.40.0] - 2026-10-12
 Search in the application members picker.
